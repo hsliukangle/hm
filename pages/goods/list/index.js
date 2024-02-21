@@ -20,6 +20,7 @@ Page({
     hasLoaded: false,
     loadMoreStatus: 0,
     loading: true,
+    shop: 0
   },
 
   pageNum: 1,
@@ -39,7 +40,7 @@ Page({
   },
 
   generalQueryData(reset = false) {
-    const { filter, keywords, minVal, maxVal } = this.data;
+    const { filter, keywords, minVal, maxVal, shop} = this.data;
     const { pageNum, pageSize } = this;
     const { sorts, overall } = filter;
     const params = {
@@ -47,6 +48,7 @@ Page({
       pageNum: 1,
       pageSize: 30,
       keyword: keywords,
+      shop: shop
     };
 
     if (sorts) {
@@ -79,6 +81,7 @@ Page({
     });
     try {
       const result = await fetchGoodsList(params);
+      console.log(result)
       const code = 'Success';
       const data = result;
       if (code.toUpperCase() === 'SUCCESS') {
@@ -124,7 +127,11 @@ Page({
     });
   },
 
-  onLoad() {
+  onLoad(query) {
+    const { shop } = query;
+    this.setData({
+      shop
+    });
     this.init(true);
   },
 

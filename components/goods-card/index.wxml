@@ -1,7 +1,7 @@
 <view id="{{independentID}}" class="goods-card" bind:tap="clickHandle" data-goods="{{ goods }}">
   <view class="goods-card__main">
     <view class="goods-card__thumb" bind:tap="clickThumbHandle">
-      <t-image wx:if="{{ !!goods.images }}" t-class="goods-card__img" src="{{ goods.images }}" mode="aspectFill" lazy-load />
+      <t-image wx:if="{{ !!goods.main_image }}" t-class="goods-card__img" src="{{ goods.main_image }}" mode="aspectFill" lazy-load />
     </view>
     <view class="goods-card__body">
       <view class="goods-card__upper">

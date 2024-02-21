@@ -45,21 +45,21 @@ const orderTagInfos = [{
     iconName: 'wallet',
     orderNum: 0,
     tabType: 5,
-    status: 1,
+    status: 10,
   },
   {
     title: '待评价',
     iconName: 'comment',
     orderNum: 0,
     tabType: 60,
-    status: 1,
+    status: 50,
   },
   {
     title: '退款/售后',
     iconName: 'exchang',
     orderNum: 0,
     tabType: 0,
-    status: 1,
+    status: 60,
   },
 ];
 
@@ -101,27 +101,27 @@ Page({
     fetchUserCenter().then(
       ({
         userInfo,
-        countsData,
-        orderTagInfos: orderInfo,
+        // countsData,
+        // orderTagInfos: orderInfo,
         customerServiceInfo,
       }) => {
         // eslint-disable-next-line no-unused-expressions
-        menuData?.[0].forEach((v) => {
-          countsData.forEach((counts) => {
-            if (counts.type === v.type) {
-              // eslint-disable-next-line no-param-reassign
-              v.tit = counts.num;
-            }
-          });
-        });
-        const info = orderTagInfos.map((v, index) => ({
-          ...v,
-          ...orderInfo[index],
-        }));
+        // menuData?.[0].forEach((v) => {
+        //   countsData.forEach((counts) => {
+        //     if (counts.type === v.type) {
+        //       // eslint-disable-next-line no-param-reassign
+        //       v.tit = counts.num;
+        //     }
+        //   });
+        // });
+        // const info = orderTagInfos.map((v, index) => ({
+        //   ...v,
+        //   ...orderInfo[index],
+        // }));
         this.setData({
           userInfo,
           menuData,
-          orderTagInfos: info,
+          // orderTagInfos: info,
           customerServiceInfo,
           currAuthStep: 2,
         });
@@ -189,20 +189,20 @@ Page({
 
   jumpNav(e) {
     const status = e.detail.tabType;
-
+    console.log(status)
     if (status === 0) {
       wx.navigateTo({
         url: '/pages/order/after-service-list/index'
       });
     } else {
-      wx.navigateTo({
+      wx.switchTab({
         url: `/pages/order/order-list/index?status=${status}`
       });
     }
   },
 
   jumpAllOrder() {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/order/order-list/index'
     });
   },

@@ -1,4 +1,6 @@
-import { getCategoryList } from '../../../services/good/fetchCategoryList';
+import {
+  getCategoryList
+} from '../../../services/good/fetchCategoryList';
 Page({
   data: {
     list: [],
@@ -17,9 +19,10 @@ Page({
   onShow() {
     this.getTabBar().init();
   },
-  onChange() {
+  onChange(e) {
+    let cate = e.detail.item.id;
     wx.navigateTo({
-      url: '/pages/goods/list/index',
+      url: '/pages/goods/list/index?shop=' + cate,
     });
   },
   onLoad() {

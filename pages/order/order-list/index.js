@@ -22,7 +22,7 @@ Page({
       },
       {
         key: OrderStatus.PENDING_PAYMENT,
-        text: '待付款',
+        text: '待支付',
         info: ''
       },
       {
@@ -106,9 +106,9 @@ Page({
       parameter: {
         pageSize: this.page.size,
         pageNum: this.page.num,
+        orderStatus: statusCode
       },
     };
-    if (statusCode !== -1) params.parameter.orderStatus = statusCode;
     this.setData({
       listLoading: 1
     });
@@ -116,38 +116,24 @@ Page({
       .then((res) => {
         this.page.num++;
         let orderList = [];
-        if (res && res.data && res.data.orders) {
-          orderList = (res.data.orders || []).map((order) => {
+        if (res && res.data && res.data) {
+          orderList = (res.data || []).map((order) => {
             return {
-              id: order.orderId,
-              orderNo: order.orderNo,
-              parentOrderNo: order.parentOrderNo,
-              storeId: order.storeId,
-              storeName: order.storeName,
-              status: order.orderStatus,
-              statusDesc: order.orderStatusName,
-              amount: order.paymentAmount,
-              totalAmount: order.totalAmount,
-              logisticsNo: order.logisticsVO.logisticsNo,
-              createTime: order.createTime,
-              goodsList: (order.orderItemVOs || []).map((goods) => ({
+              id: order.id,
+              orderNo: order.order_no,
+              parentOrderNo: order.order_no,
+              status: order.status,
+              statusDesc: order.status_name,
+              amount: order.price,
+              totalAmount: order.price,
+              createTime: order.created_at,
+              goodsList: (order.related_service || []).map((goods) => ({
                 id: goods.id,
-                thumb: cosThumb(goods.goodsPictureUrl, 70),
-                title: goods.goodsName,
-                skuId: goods.skuId,
-                spuId: goods.spuId,
-                specs: (goods.specifications || []).map(
-                  (spec) => spec.specValue,
-                ),
-                price: goods.tagPrice ? goods.tagPrice : goods.actualPrice,
-                num: goods.buyQuantity,
-                titlePrefixTags: goods.tagText ? [{
-                  text: goods.tagText
-                }] : [],
+                thumb: cosThumb(goods.main_image, 70),
+                title: goods.name,
+                price: goods.price
               })),
-              buttons: order.buttonVOs || [],
-              groupInfoVo: order.groupInfoVo,
-              freightFee: order.freightFee,
+              buttons: order.button || []
             };
           });
         }
