@@ -1,9 +1,5 @@
-import {
-  fetchHome
-} from '../../services/home/home';
-import {
-  fetchGoodsList
-} from '../../services/good/fetchGoods';
+import { fetchHome } from '../../services/home/home';
+import { fetchGoodsList } from '../../services/good/fetchGoods';
 import Toast from 'tdesign-miniprogram/toast/index';
 
 Page({
@@ -18,15 +14,15 @@ Page({
     duration: '500',
     interval: 5000,
     navigation: {
-      type: 'dots'
+      type: 'dots',
     },
     swiperImageProps: {
-      mode: 'scaleToFill'
+      mode: 'scaleToFill',
     },
   },
 
   goodListPagination: {
-    index: 0,
+    index: 1,
     num: 20,
   },
 
@@ -62,10 +58,7 @@ Page({
     this.setData({
       pageLoading: true,
     });
-    fetchHome().then(({
-      swiper,
-      tabList
-    }) => {
+    fetchHome().then(({ swiper, tabList }) => {
       this.setData({
         tabList,
         imgSrcs: swiper,
@@ -92,17 +85,17 @@ Page({
     }
 
     this.setData({
-      goodsListLoadStatus: 1
+      goodsListLoadStatus: 1,
     });
 
     const pageSize = this.goodListPagination.num;
     let pageIndex = this.goodListPagination.index + 1;
     if (fresh) {
-      pageIndex = 0;
+      pageIndex = 1;
     }
 
     try {
-      let cate = this.privateData.tabIndex
+      const cate = this.privateData.tabIndex;
       const nextList = await fetchGoodsList(cate, pageIndex, pageSize);
       this.setData({
         goodsList: fresh ? nextList : this.data.goodsList.concat(nextList),
@@ -113,15 +106,13 @@ Page({
       this.goodListPagination.num = pageSize;
     } catch (err) {
       this.setData({
-        goodsListLoadStatus: 3
+        goodsListLoadStatus: 3,
       });
     }
   },
 
   goodListClickHandle(e) {
-    const {
-      id
-    } = e.detail.goods;
+    const { id } = e.detail.goods;
     wx.navigateTo({
       url: `/pages/goods/details/index?spuid=${id}`,
     });
@@ -137,16 +128,12 @@ Page({
 
   navToSearchPage() {
     wx.navigateTo({
-      url: '/pages/goods/search/index'
+      url: '/pages/goods/search/index',
     });
   },
 
-  navToActivityDetail({
-    detail
-  }) {
-    const {
-      index: promotionID = 0
-    } = detail || {};
+  navToActivityDetail({ detail }) {
+    const { index: promotionID = 0 } = detail || {};
     wx.navigateTo({
       url: `/pages/promotion-detail/index?promotion_id=${promotionID}`,
     });
