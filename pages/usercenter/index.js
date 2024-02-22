@@ -98,7 +98,8 @@ Page({
   },
 
   fetUseriInfoHandle() {
-    fetchUserCenter().then(
+    let user_id = wx.getStorageSync('user_id')
+    fetchUserCenter(user_id).then(
       ({
         userInfo,
         // countsData,

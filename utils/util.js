@@ -123,10 +123,11 @@ const phoneRegCheck = (phone) => {
 };
 
 // get请求
-const getRequest = (url) => {
+const getRequest = (url,data = {}) => {
     return new Promise((resolve, reject) => {
         wx.request({
             url: 'http://www.healthman.cn' + url,
+            data: data,
             header: {
                 Accept: 'application/json',
             },

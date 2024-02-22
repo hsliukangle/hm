@@ -3,9 +3,6 @@ import {
   fetchGood
 } from '../../../services/good/fetchGood';
 import {
-  fetchActivityList
-} from '../../../services/activity/fetchActivityList';
-import {
   getGoodsDetailsCommentList,
   getGoodsDetailsCommentsCount,
 } from '../../../services/good/fetchGoodsDetailsComments';
@@ -39,7 +36,6 @@ Page({
       middleCount: 0,
     },
     isShowPromotionPop: false,
-    activityList: [],
     recLeftImg,
     recRightImg,
     details: {},
@@ -58,13 +54,7 @@ Page({
         title: '首页',
         url: '/pages/home/home',
         iconName: 'home',
-      },
-      {
-        title: '购物车',
-        url: '/pages/cart/index',
-        iconName: 'cart',
-        showCartNum: true,
-      },
+      }
     ],
     isStock: true,
     cartNum: 0,
@@ -338,8 +328,9 @@ Page({
   },
 
   getDetail(spuId) {
-    Promise.all([fetchGood(spuId), fetchActivityList()]).then((res) => {
-      const [details, activityList] = res;
+    Promise.all([fetchGood(spuId)]).then((res) => {
+      const [details] = res;
+      console.log(res)
       const skuArray = [];
       const {
         skuList,
@@ -358,15 +349,8 @@ Page({
         });
       });
       const promotionArray = [];
-      activityList.forEach((item) => {
-        promotionArray.push({
-          tag: item.promotionSubCode === 'MYJ' ? '满减' : '满折',
-          label: '满100元减99.9元',
-        });
-      });
       this.setData({
         details,
-        activityList,
         isStock: details.spuStockQuantity > 0,
         maxSalePrice: maxSalePrice ? parseInt(maxSalePrice) : 0,
         maxLinePrice: maxLinePrice ? parseInt(maxLinePrice) : 0,

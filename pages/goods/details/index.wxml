@@ -10,39 +10,39 @@
         </view>
         <view class="sold-num">已售{{soldNum}}</view>
       </view>
-      <view wx:if="{{activityList.length > 0}}" class="goods-activity" bindtap="showPromotionPopup">
-        <view class="tags-container">
-          <view wx:for="{{activityList}}" data-promotionId="{{item.promotionId}}" wx:key="index" wx:if="{{index<4}}">
-            <view class="goods-activity-tag">{{item.tag}}</view>
-          </view>
-        </view>
-        <view class="activity-show">
-          <view class="activity-show-text">领劵</view>
-          <t-icon name="chevron-right" size="42rpx" />
-        </view>
-      </view>
+<!--      <view wx:if="{{activityList.length > 0}}" class="goods-activity" bindtap="showPromotionPopup">-->
+<!--        <view class="tags-container">-->
+<!--          <view wx:for="{{activityList}}" data-promotionId="{{item.promotionId}}" wx:key="index" wx:if="{{index<4}}">-->
+<!--            <view class="goods-activity-tag">{{item.tag}}</view>-->
+<!--          </view>-->
+<!--        </view>-->
+<!--        <view class="activity-show">-->
+<!--          <view class="activity-show-text">领劵</view>-->
+<!--          <t-icon name="chevron-right" size="42rpx" />-->
+<!--        </view>-->
+<!--      </view>-->
       <view class="goods-title">
         <view class="goods-name">{{details.title}}</view>
-        <view class="goods-tag">
-          <t-button open-type="share" t-class="shareBtn" variant="text">
-            <view class="btn-icon">
-              <t-icon name="share" size="40rpx" color="#000" />
-              <view class="share-text">分享</view>
-            </view>
-          </t-button>
-        </view>
+<!--        <view class="goods-tag">-->
+<!--          <t-button open-type="share" t-class="shareBtn" variant="text">-->
+<!--            <view class="btn-icon">-->
+<!--              <t-icon name="share" size="40rpx" color="#000" />-->
+<!--              <view class="share-text">分享</view>-->
+<!--            </view>-->
+<!--          </t-button>-->
+<!--        </view>-->
       </view>
       <view class="goods-intro">{{intro}}</view>
     </view>
-    <view class="spu-select" bindtap="showSkuSelectPopup">
-      <view class="label">已选</view>
-      <view class="content">
-        <view class="{{!selectedAttrStr ? 'tintColor' : ''}}">
-          {{selectedAttrStr ? buyNum : ''}}{{selectedAttrStr || '请选择'}}
-        </view>
-        <t-icon name="chevron-right" size="40rpx" color="#BBBBBB" />
-      </view>
-    </view>
+<!--    <view class="spu-select" bindtap="showSkuSelectPopup">-->
+<!--      <view class="label">已选</view>-->
+<!--      <view class="content">-->
+<!--        <view class="{{!selectedAttrStr ? 'tintColor' : ''}}">-->
+<!--          {{selectedAttrStr ? buyNum : ''}}{{selectedAttrStr || '请选择'}}-->
+<!--        </view>-->
+<!--        <t-icon name="chevron-right" size="40rpx" color="#BBBBBB" />-->
+<!--      </view>-->
+<!--    </view>-->
     <view wx:if="{{ commentsStatistics.commentCount > 0 }}" class="comments-wrap">
       <view class="comments-head" bindtap="navToCommentsListPage">
         <view class="comments-title-wrap">
