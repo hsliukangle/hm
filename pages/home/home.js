@@ -19,11 +19,11 @@ Page({
     swiperImageProps: {
       mode: 'scaleToFill',
     },
-  },
-
-  goodListPagination: {
-    index: 1,
-    num: 20,
+    goodListPagination: {
+      index: 0,
+      num: 20,
+      total: 0,
+    },
   },
 
   privateData: {
@@ -78,32 +78,42 @@ Page({
   },
 
   async loadGoodsList(fresh = false) {
+    this.setData({
+      goodsListLoadStatus: 1,
+    });
+    const pageSize = this.data.goodListPagination.num;
+    let pageIndex = this.data.goodListPagination.index + 1;
     if (fresh) {
       wx.pageScrollTo({
         scrollTop: 0,
       });
-    }
-
-    this.setData({
-      goodsListLoadStatus: 1,
-    });
-
-    const pageSize = this.goodListPagination.num;
-    let pageIndex = this.goodListPagination.index + 1;
-    if (fresh) {
       pageIndex = 1;
+    } else {
+      if (
+        this.data.goodListPagination.index != 0 &&
+        this.data.goodListPagination.num * this.data.goodListPagination.index >= this.data.goodListPagination.total
+      ) {
+        this.setData({
+          goodsListLoadStatus: 2,
+        });
+        return false;
+      }
     }
 
     try {
       const cate = this.privateData.tabIndex;
       const nextList = await fetchGoodsList(cate, pageIndex, pageSize);
+      console.log(nextList.data);
+      const goodListPagination = {
+        total: nextList.total,
+        index: pageIndex,
+        num: pageSize,
+      };
       this.setData({
-        goodsList: fresh ? nextList : this.data.goodsList.concat(nextList),
+        goodsList: fresh ? nextList.data : this.data.goodsList.concat(nextList.data),
         goodsListLoadStatus: 0,
+        goodListPagination: goodListPagination,
       });
-
-      this.goodListPagination.index = pageIndex;
-      this.goodListPagination.num = pageSize;
     } catch (err) {
       this.setData({
         goodsListLoadStatus: 3,

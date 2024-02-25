@@ -24,7 +24,7 @@ function realFetchGoodsList(cate = 0, pageIndex = 1, pageSize = 20) {
   return new Promise((resolve, reject) => {
     getRequest(`/api/star_services/${cate}?pageIndex=${pageIndex}&pageSize=${pageSize}`)
       .then((res) => {
-        resolve(res.data.data.related_service);
+        resolve(res.data.data);
       })
       .catch((err) => {
         reject('获取服务错误', err);
