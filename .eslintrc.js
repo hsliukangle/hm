@@ -2,12 +2,12 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    es6: true,
+    es6: true
   },
   parserOptions: {
     ecmaVersion: 2020,
     // ECMAScript modules 模式
-    sourceType: 'module',
+    sourceType: 'module'
   },
   extends: ['plugin:prettier/recommended', 'prettier'],
   globals: {
@@ -19,12 +19,13 @@ module.exports = {
     getCurrentPages: true,
     Behavior: true,
     global: true,
-    __wxConfig: true,
+    __wxConfig: true
   },
   ignorePatterns: ['*.wxs'],
   rules: {
+    'comma-dangle': [2, 'never'],
     'no-console': 'off',
-    'prettier/prettier': 'warn',
+    'prettier/prettier': 0,
     'no-undef': 'off',
     camelcase: 0,
     'class-name-casing': 'off',
@@ -40,16 +41,16 @@ module.exports = {
       {
         AssignmentExpression: {
           array: false,
-          object: false,
+          object: false
         },
         VariableDeclarator: {
           array: false,
-          object: true,
-        },
+          object: true
+        }
       },
       {
-        enforceForRenamedProperties: false,
-      },
+        enforceForRenamedProperties: false
+      }
     ],
     'no-const-assign': 'error',
     'no-new-object': 'error',
@@ -64,8 +65,8 @@ module.exports = {
       {
         anonymous: 'always',
         named: 'never',
-        asyncArrow: 'always',
-      },
+        asyncArrow: 'always'
+      }
     ],
     'no-param-reassign': [
       'warn',
@@ -82,9 +83,9 @@ module.exports = {
           'response', // for Express responses
           '$scope', // for Angular 1 scopes
           'staticContext', // for ReactRouter context
-          'state', // for Vuex
-        ],
-      },
+          'state' // for Vuex
+        ]
+      }
     ],
     'no-confusing-arrow': 'warn',
     'no-dupe-class-members': 'error',
@@ -98,8 +99,8 @@ module.exports = {
         args: 'after-used',
         ignoreRestSiblings: true,
         argsIgnorePattern: '^_.+',
-        varsIgnorePattern: '^_.+',
-      },
+        varsIgnorePattern: '^_.+'
+      }
     ],
     eqeqeq: ['warn', 'always'],
     'no-case-declarations': 'error',
@@ -116,16 +117,16 @@ module.exports = {
           ['%', '/'],
           ['&', '|', '<<', '>>', '>>>'],
           ['==', '!=', '===', '!=='],
-          ['&&', '||'],
+          ['&&', '||']
         ],
-        allowSamePrecedence: false,
-      },
+        allowSamePrecedence: false
+      }
     ],
     'no-else-return': [
       'warn',
       {
-        allowElseIf: false,
-      },
+        allowElseIf: false
+      }
     ],
     'no-new-wrappers': 'warn',
     indent: [
@@ -137,22 +138,22 @@ module.exports = {
         outerIIFEBody: 1,
         FunctionDeclaration: {
           parameters: 1,
-          body: 1,
+          body: 1
         },
         FunctionExpression: {
           parameters: 1,
-          body: 1,
+          body: 1
         },
         CallExpression: {
-          arguments: 1,
+          arguments: 1
         },
         ArrayExpression: 1,
         ObjectExpression: 1,
         ImportDeclaration: 1,
         flatTernaryExpressions: false,
-        ignoreComments: false,
-      },
+        ignoreComments: false
+      }
     ],
-    'linebreak-style': ['warn', 'unix'],
-  },
+    'linebreak-style': ['warn', 'unix']
+  }
 };

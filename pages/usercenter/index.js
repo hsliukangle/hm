@@ -29,16 +29,16 @@ const menuData = [
       title: '帮助中心',
       tit: '',
       url: '',
-      type: 'help-center',
+      type: 'help-center'
     },
     {
       title: '客服热线',
       tit: '',
       url: '',
       type: 'service',
-      icon: 'service',
-    },
-  ],
+      icon: 'service'
+    }
+  ]
 ];
 
 const orderTagInfos = [
@@ -47,46 +47,43 @@ const orderTagInfos = [
     iconName: 'wallet',
     orderNum: 0,
     tabType: 10,
-    status: 10,
+    status: 10
   },
   {
     title: '待评价',
     iconName: 'comment',
     orderNum: 0,
     tabType: 60,
-    status: 50,
+    status: 50
   },
   {
     title: '退款/售后',
     iconName: 'exchang',
     orderNum: 0,
     tabType: 0,
-    status: 60,
-  },
+    status: 60
+  }
 ];
 
 Page({
   data: {
     showMakePhone: false,
-    userInfo: {
-      avatarUrl: '',
-      nickName: '正在登录...',
-      phoneNumber: '',
-    },
+    userInfo: {},
     menuData,
     orderTagInfos,
     customerServiceInfo: {},
     currAuthStep: 1,
     showKefu: true,
-    versionNo: '',
+    versionNo: ''
   },
 
   onLoad() {
     this.getVersionInfo();
-    const userInfo = wx.setStorageSync('userInfo');
+    const userInfo = wx.getStorageSync('userInfo');
     if (userInfo) {
       this.setData({
         userInfo,
+        currAuthStep: 2
       });
     }
   },
@@ -96,12 +93,12 @@ Page({
     /*this.init();*/
   },
   /* onPullDownRefresh() {
-    this.init();
-  },
+      this.init();
+    },
 
-  init() {
-    this.fetUseriInfoHandle();
-  },*/
+    init() {
+      this.fetUseriInfoHandle();
+    },*/
 
   fetUseriInfoHandle() {
     wx.showModal({
@@ -112,54 +109,53 @@ Page({
           wx.getUserProfile({
             desc: '获取你的昵称、头像、地区及性别',
             success: (res) => {
-              console.log(res);
               this.setData({
                 userInfo: res.userInfo,
+                currAuthStep: 2
               });
               wx.setStorageSync('userInfo', res.userInfo);
-              console.log(this.data.userInfo);
             },
             fail: (res) => {
               //拒绝授权
               console.log(res);
-            },
+            }
           });
         } else if (res.cancel) {
           //拒绝授权 showErrorModal是自定义的提示
         }
-      },
+      }
     });
     /*let user_id = wx.getStorageSync('user_id')
-    fetchUserCenter(user_id).then(
-      ({
-        userInfo,
-        // countsData,
-        // orderTagInfos: orderInfo,
-        customerServiceInfo,
-      }) => {
-        // eslint-disable-next-line no-unused-expressions
-        // menuData?.[0].forEach((v) => {
-        //   countsData.forEach((counts) => {
-        //     if (counts.type === v.type) {
-        //       // eslint-disable-next-line no-param-reassign
-        //       v.tit = counts.num;
-        //     }
-        //   });
-        // });
-        // const info = orderTagInfos.map((v, index) => ({
-        //   ...v,
-        //   ...orderInfo[index],
-        // }));
-        this.setData({
-          userInfo,
-          menuData,
-          // orderTagInfos: info,
-          customerServiceInfo,
-          currAuthStep: 2,
-        });
-        wx.stopPullDownRefresh();
-      },
-    );*/
+        fetchUserCenter(user_id).then(
+          ({
+            userInfo,
+            // countsData,
+            // orderTagInfos: orderInfo,
+            customerServiceInfo,
+          }) => {
+            // eslint-disable-next-line no-unused-expressions
+            // menuData?.[0].forEach((v) => {
+            //   countsData.forEach((counts) => {
+            //     if (counts.type === v.type) {
+            //       // eslint-disable-next-line no-param-reassign
+            //       v.tit = counts.num;
+            //     }
+            //   });
+            // });
+            // const info = orderTagInfos.map((v, index) => ({
+            //   ...v,
+            //   ...orderInfo[index],
+            // }));
+            this.setData({
+              userInfo,
+              menuData,
+              // orderTagInfos: info,
+              customerServiceInfo,
+              currAuthStep: 2,
+            });
+            wx.stopPullDownRefresh();
+          },
+        );*/
   },
 
   onClickCell({ currentTarget }) {
@@ -168,7 +164,7 @@ Page({
     switch (type) {
       case 'address': {
         wx.navigateTo({
-          url: '/pages/usercenter/address/list/index',
+          url: '/pages/usercenter/address/list/index'
         });
         break;
       }
@@ -182,7 +178,7 @@ Page({
           selector: '#t-toast',
           message: '你点击了帮助中心',
           icon: '',
-          duration: 1000,
+          duration: 1000
         });
         break;
       }
@@ -192,13 +188,13 @@ Page({
           selector: '#t-toast',
           message: '你点击了积分菜单',
           icon: '',
-          duration: 1000,
+          duration: 1000
         });
         break;
       }
       case 'coupon': {
         wx.navigateTo({
-          url: '/pages/coupon/coupon-list/index',
+          url: '/pages/coupon/coupon-list/index'
         });
         break;
       }
@@ -208,7 +204,7 @@ Page({
           selector: '#t-toast',
           message: '未知跳转',
           icon: '',
-          duration: 1000,
+          duration: 1000
         });
         break;
       }
@@ -220,36 +216,36 @@ Page({
     console.log(status);
     if (status === 0) {
       wx.navigateTo({
-        url: '/pages/order/after-service-list/index',
+        url: '/pages/order/after-service-list/index'
       });
     } else {
       wx.navigateTo({
-        url: `/pages/order/order-list/index?status=${status}`,
+        url: `/pages/order/order-list/index?status=${status}`
       });
     }
   },
 
   jumpAllOrder() {
     wx.navigateTo({
-      url: '/pages/order/order-list/index',
+      url: '/pages/order/order-list/index'
     });
   },
 
   openMakePhone() {
     this.setData({
-      showMakePhone: true,
+      showMakePhone: true
     });
   },
 
   closeMakePhone() {
     this.setData({
-      showMakePhone: false,
+      showMakePhone: false
     });
   },
 
   call() {
     wx.makePhoneCall({
-      phoneNumber: this.data.customerServiceInfo.servicePhone,
+      phoneNumber: this.data.customerServiceInfo.servicePhone
     });
   },
 
@@ -257,7 +253,7 @@ Page({
     const { currAuthStep } = this.data;
     if (currAuthStep === 2) {
       wx.navigateTo({
-        url: '/pages/usercenter/person-info/index',
+        url: '/pages/usercenter/person-info/index'
       });
     } else {
       this.fetUseriInfoHandle();
@@ -268,7 +264,7 @@ Page({
     const versionInfo = wx.getAccountInfoSync();
     const { version, envVersion = __wxConfig } = versionInfo.miniProgram;
     this.setData({
-      versionNo: envVersion === 'release' ? version : envVersion,
+      versionNo: envVersion === 'release' ? version : envVersion
     });
-  },
+  }
 });
