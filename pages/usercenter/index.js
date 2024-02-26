@@ -1,6 +1,6 @@
-import {
+/*import {
   fetchUserCenter
-} from '../../services/usercenter/fetchUsercenter';
+} from '../../services/usercenter/fetchUsercenter';*/
 import Toast from 'tdesign-miniprogram/toast/index';
 
 const menuData = [
@@ -24,7 +24,8 @@ const menuData = [
     //   type: 'point',
     // },
   ],
-  [{
+  [
+    {
       title: '帮助中心',
       tit: '',
       url: '',
@@ -40,7 +41,8 @@ const menuData = [
   ],
 ];
 
-const orderTagInfos = [{
+const orderTagInfos = [
+  {
     title: '待支付',
     iconName: 'wallet',
     orderNum: 0,
@@ -63,42 +65,71 @@ const orderTagInfos = [{
   },
 ];
 
-const getDefaultData = () => ({
-  showMakePhone: false,
-  userInfo: {
-    avatarUrl: '',
-    nickName: '正在登录...',
-    phoneNumber: '',
-  },
-  menuData,
-  orderTagInfos,
-  customerServiceInfo: {},
-  currAuthStep: 1,
-  showKefu: true,
-  versionNo: '',
-});
-
 Page({
-  data: getDefaultData(),
+  data: {
+    showMakePhone: false,
+    userInfo: {
+      avatarUrl: '',
+      nickName: '正在登录...',
+      phoneNumber: '',
+    },
+    menuData,
+    orderTagInfos,
+    customerServiceInfo: {},
+    currAuthStep: 1,
+    showKefu: true,
+    versionNo: '',
+  },
 
   onLoad() {
     this.getVersionInfo();
+    const userInfo = wx.setStorageSync('userInfo');
+    if (userInfo) {
+      this.setData({
+        userInfo,
+      });
+    }
   },
 
   onShow() {
     this.getTabBar().init();
-    this.init();
+    /*this.init();*/
   },
-  onPullDownRefresh() {
+  /* onPullDownRefresh() {
     this.init();
   },
 
   init() {
     this.fetUseriInfoHandle();
-  },
+  },*/
 
   fetUseriInfoHandle() {
-    let user_id = wx.getStorageSync('user_id')
+    wx.showModal({
+      title: '温馨提示',
+      content: '正在请求您的个人信息',
+      success: (res) => {
+        if (res.confirm) {
+          wx.getUserProfile({
+            desc: '获取你的昵称、头像、地区及性别',
+            success: (res) => {
+              console.log(res);
+              this.setData({
+                userInfo: res.userInfo,
+              });
+              wx.setStorageSync('userInfo', res.userInfo);
+              console.log(this.data.userInfo);
+            },
+            fail: (res) => {
+              //拒绝授权
+              console.log(res);
+            },
+          });
+        } else if (res.cancel) {
+          //拒绝授权 showErrorModal是自定义的提示
+        }
+      },
+    });
+    /*let user_id = wx.getStorageSync('user_id')
     fetchUserCenter(user_id).then(
       ({
         userInfo,
@@ -128,20 +159,16 @@ Page({
         });
         wx.stopPullDownRefresh();
       },
-    );
+    );*/
   },
 
-  onClickCell({
-    currentTarget
-  }) {
-    const {
-      type
-    } = currentTarget.dataset;
+  onClickCell({ currentTarget }) {
+    const { type } = currentTarget.dataset;
 
     switch (type) {
       case 'address': {
         wx.navigateTo({
-          url: '/pages/usercenter/address/list/index'
+          url: '/pages/usercenter/address/list/index',
         });
         break;
       }
@@ -171,7 +198,7 @@ Page({
       }
       case 'coupon': {
         wx.navigateTo({
-          url: '/pages/coupon/coupon-list/index'
+          url: '/pages/coupon/coupon-list/index',
         });
         break;
       }
@@ -190,33 +217,33 @@ Page({
 
   jumpNav(e) {
     const status = e.detail.tabType;
-    console.log(status)
+    console.log(status);
     if (status === 0) {
       wx.navigateTo({
-        url: '/pages/order/after-service-list/index'
+        url: '/pages/order/after-service-list/index',
       });
     } else {
       wx.navigateTo({
-        url: `/pages/order/order-list/index?status=${status}`
+        url: `/pages/order/order-list/index?status=${status}`,
       });
     }
   },
 
   jumpAllOrder() {
     wx.navigateTo({
-      url: '/pages/order/order-list/index'
+      url: '/pages/order/order-list/index',
     });
   },
 
   openMakePhone() {
     this.setData({
-      showMakePhone: true
+      showMakePhone: true,
     });
   },
 
   closeMakePhone() {
     this.setData({
-      showMakePhone: false
+      showMakePhone: false,
     });
   },
 
@@ -227,12 +254,10 @@ Page({
   },
 
   gotoUserEditPage() {
-    const {
-      currAuthStep
-    } = this.data;
+    const { currAuthStep } = this.data;
     if (currAuthStep === 2) {
       wx.navigateTo({
-        url: '/pages/usercenter/person-info/index'
+        url: '/pages/usercenter/person-info/index',
       });
     } else {
       this.fetUseriInfoHandle();
@@ -241,10 +266,7 @@ Page({
 
   getVersionInfo() {
     const versionInfo = wx.getAccountInfoSync();
-    const {
-      version,
-      envVersion = __wxConfig
-    } = versionInfo.miniProgram;
+    const { version, envVersion = __wxConfig } = versionInfo.miniProgram;
     this.setData({
       versionNo: envVersion === 'release' ? version : envVersion,
     });
