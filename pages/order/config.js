@@ -1,6 +1,6 @@
 export const OrderStatus = {
   PENDING_PAYMENT: 10, // 待支付
-  PENDING_USE: 11, // 待发货
+  PENDING_USE: 40, // 待使用
   COMPLETE: 50, // 已完成/待评价
   PAYMENT_TIMEOUT: 80, // 已取消，支付超时
   CANCELED_NOT_PAYMENT: 80, // 已取消，未支付主动取消
@@ -43,6 +43,7 @@ export const OrderButtonTypes = {
   DELIVERY: 8, // 查看物流
   REBUY: 9, // 再次购买
   INVITE_GROUPON: 11, //邀请好友拼团
+  SHOW_CODE: 12, //查看二维码
 };
 
 // 售后服务按钮类型

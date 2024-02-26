@@ -46,10 +46,6 @@
         "text": "分类"
       },
       {
-        "pagePath": "pages/order/order-list/index",
-        "text": "订单"
-      },
-      {
         "pagePath": "pages/usercenter/index",
         "text": "我的"
       }

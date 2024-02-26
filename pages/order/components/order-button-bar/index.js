@@ -112,15 +112,29 @@ Component({
           break;
         case OrderButtonTypes.REBUY:
           this.onBuyAgain(this.data.order);
+        case OrderButtonTypes.SHOW_CODE:
+          this.onShowCode(this.data.order);
       }
     },
 
-    onCancel() {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: '你点击了取消订单',
-        icon: 'check-circle',
+    onCancel(data) {
+      const {
+        postRequest
+      } = require('../../../../utils/util');
+      postRequest("/api/order_cancel",{
+        "user_id":1,
+        "order_no":data.orderNo
+      }).then(res => {
+        if(res.data.code == 200){
+          Toast({
+            context: this,
+            selector: '#t-toast',
+            message: '取消成功',
+            icon: 'check-circle',
+          });
+        }
+      }).catch(err => {
+        reject('取消订单错误', err);
       });
     },
 
@@ -163,6 +177,15 @@ Component({
         context: this,
         selector: '#t-toast',
         message: '你点击了再次购买',
+        icon: 'check-circle',
+      });
+    },
+
+    onShowCode() {
+      Toast({
+        context: this,
+        selector: '#t-toast',
+        message: '查看二维码',
         icon: 'check-circle',
       });
     },

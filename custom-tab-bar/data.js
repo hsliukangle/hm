@@ -9,11 +9,6 @@ export default [{
     url: 'pages/goods/category/index',
   },
   {
-    icon: 'cart',
-    text: '订单',
-    url: 'pages/order/order-list/index',
-  },
-  {
     icon: 'person',
     text: '我的',
     url: 'pages/usercenter/index',

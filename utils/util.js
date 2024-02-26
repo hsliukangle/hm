@@ -141,6 +141,26 @@ const getRequest = (url,data = {}) => {
     });
 };
 
+// post请求
+const postRequest = (url,data = {}) => {
+  return new Promise((resolve, reject) => {
+      wx.request({
+          url: 'http://www.healthman.cn' + url,
+          data: data,
+          method: 'POST',
+          header: {
+              Accept: 'application/json',
+          },
+          success: (res) => {
+              resolve(res);
+          },
+          fail: () => {
+              reject('网络异常，请重试！');
+          },
+      });
+  });
+};
+
 module.exports = {
     formatTime,
     priceFormat,
@@ -149,5 +169,6 @@ module.exports = {
     rpx2px,
     phoneEncryption,
     phoneRegCheck,
-    getRequest
+    getRequest,
+    postRequest
 };

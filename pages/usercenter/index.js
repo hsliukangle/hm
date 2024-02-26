@@ -41,10 +41,10 @@ const menuData = [
 ];
 
 const orderTagInfos = [{
-    title: '待付款',
+    title: '待支付',
     iconName: 'wallet',
     orderNum: 0,
-    tabType: 5,
+    tabType: 10,
     status: 10,
   },
   {
@@ -196,14 +196,14 @@ Page({
         url: '/pages/order/after-service-list/index'
       });
     } else {
-      wx.switchTab({
+      wx.navigateTo({
         url: `/pages/order/order-list/index?status=${status}`
       });
     }
   },
 
   jumpAllOrder() {
-    wx.switchTab({
+    wx.navigateTo({
       url: '/pages/order/order-list/index'
     });
   },
