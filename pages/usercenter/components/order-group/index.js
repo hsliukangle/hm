@@ -1,29 +1,29 @@
 Component({
   externalClasses: ['title-class', 'icon-class', 'number-class'],
   options: {
-    multipleSlots: true,
+    multipleSlots: true
   },
   properties: {
     orderTagInfos: {
       type: Array,
-      value: [],
+      value: []
     },
     title: {
       type: String,
-      value: '我的订单',
+      value: '我的订单'
     },
     desc: {
       type: String,
-      value: '全部订单',
+      value: '全部订单'
     },
     isTop: {
       type: Boolean,
-      value: true,
+      value: true
     },
     classPrefix: {
       type: String,
-      value: 'wr',
-    },
+      value: 'wr'
+    }
   },
   methods: {
     onClickItem(e) {
@@ -32,6 +32,6 @@ Component({
 
     onClickTop() {
       this.triggerEvent('onClickTop', {});
-    },
-  },
+    }
+  }
 });

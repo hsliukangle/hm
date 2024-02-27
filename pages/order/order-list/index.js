@@ -1,22 +1,16 @@
-import {
-  OrderStatus
-} from '../config';
-import {
-  fetchOrders,
-  fetchOrdersCount,
-} from '../../../services/order/orderList';
-import {
-  cosThumb
-} from '../../../utils/util';
+import { OrderStatus } from '../config';
+import { fetchOrders, fetchOrdersCount } from '../../../services/order/orderList';
+import { cosThumb } from '../../../utils/util';
 
 Page({
   page: {
     size: 5,
-    num: 1,
+    num: 1
   },
 
   data: {
-    tabs: [{
+    tabs: [
+      {
         key: -1,
         text: '全部'
       },
@@ -34,7 +28,7 @@ Page({
         key: OrderStatus.COMPLETE,
         text: '已完成',
         info: ''
-      },
+      }
     ],
     curTab: -1,
     orderList: [],
@@ -42,7 +36,7 @@ Page({
     pullDownRefreshing: false,
     emptyImg: 'https://cdn-we-retail.ym.tencent.com/miniapp/order/empty-order-list.png',
     backRefresh: false,
-    status: -1,
+    status: -1
   },
 
   onLoad(query) {
@@ -53,7 +47,7 @@ Page({
   },
 
   onShow() {
-    this.getTabBar().init();
+    // this.getTabBar().init();
     if (!this.data.backRefresh) return;
     this.onRefresh();
     this.setData({
@@ -72,9 +66,7 @@ Page({
   },
 
   onPullDownRefresh_(e) {
-    const {
-      callback
-    } = e.detail;
+    const { callback } = e.detail;
     this.setData({
       pullDownRefreshing: true
     });
@@ -96,23 +88,24 @@ Page({
   init(status) {
     status = status !== undefined ? status : this.data.curTab;
     this.setData({
-      status,
+      status
     });
     this.refreshList(status);
   },
 
   getOrderList(statusCode = -1, reset = false) {
-    const params = {
+    /* const params = {
       parameter: {
         pageSize: this.page.size,
         pageNum: this.page.num,
         orderStatus: statusCode
-      },
-    };
+      }
+    };*/
     this.setData({
       listLoading: 1
     });
-    return fetchOrders(params)
+    console.log(statusCode);
+    return fetchOrders(statusCode)
       .then((res) => {
         this.page.num++;
         let orderList = [];
@@ -139,14 +132,17 @@ Page({
         }
         return new Promise((resolve) => {
           if (reset) {
-            this.setData({
-              orderList: []
-            }, () => resolve());
+            this.setData(
+              {
+                orderList: []
+              },
+              () => resolve()
+            );
           } else resolve();
         }).then(() => {
           this.setData({
             orderList: this.data.orderList.concat(orderList),
-            listLoading: orderList.length > 0 ? 0 : 2,
+            listLoading: orderList.length > 0 ? 0 : 2
           });
         });
       })
@@ -163,11 +159,9 @@ Page({
   },
 
   onTabChange(e) {
-    const {
-      value
-    } = e.detail;
+    const { value } = e.detail;
     this.setData({
-      status: value,
+      status: value
     });
     this.refreshList(value);
   },
@@ -175,9 +169,7 @@ Page({
   getOrdersCount() {
     return fetchOrdersCount().then((res) => {
       const tabsCount = res.data || [];
-      const {
-        tabs
-      } = this.data;
+      const { tabs } = this.data;
       tabs.forEach((tab) => {
         const tabCount = tabsCount.find((c) => c.tabType === tab.key);
         if (tabCount) {
@@ -189,21 +181,17 @@ Page({
       });
     });
   },
-
   refreshList(status = -1) {
     this.page = {
       size: this.page.size,
-      num: 1,
+      num: 1
     };
     this.setData({
       curTab: status,
       orderList: []
     });
 
-    return Promise.all([
-      this.getOrderList(status, true),
-      this.getOrdersCount(),
-    ]);
+    return Promise.all([this.getOrderList(status, true), this.getOrdersCount()]);
   },
 
   onRefresh() {
@@ -211,11 +199,9 @@ Page({
   },
 
   onOrderCardTap(e) {
-    const {
-      order
-    } = e.currentTarget.dataset;
+    const { order } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: `/pages/order/order-detail/index?orderNo=${order.orderNo}`,
+      url: `/pages/order/order-detail/index?orderNo=${order.orderNo}`
     });
-  },
+  }
 });

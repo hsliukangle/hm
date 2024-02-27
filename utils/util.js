@@ -139,7 +139,7 @@ const getRequest = (url, data = {}) => {
 const postRequest = (url, data = {}) => {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `http://www.healthman.cn${url}`,
+      url: `http://39.106.131.33${url}`,
       data: data,
       method: 'POST',
       header: {

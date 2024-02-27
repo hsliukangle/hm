@@ -1,5 +1,6 @@
 import { fetchUserCenter } from '../../services/usercenter/fetchUsercenter';
 import Toast from 'tdesign-miniprogram/toast/index';
+/*import {fetchOrders} from "../../services/order/orderList";*/
 
 const menuData = [
   [
@@ -83,6 +84,10 @@ Page({
         userInfo,
         currAuthStep: 2
       });
+      /*this.getMyOrder({
+        member_id:userInfo.id,
+        status:-1
+      })*/
     }
   },
 
@@ -90,6 +95,11 @@ Page({
     this.getTabBar().init();
     /*this.init();*/
   },
+
+  /*  getMyOrder: async (params)=>{
+    const res=await fetchOrders(params);
+    console.log(res)
+  },*/
   /* onPullDownRefresh() {
       this.init();
     },
