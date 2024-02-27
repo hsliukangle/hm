@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-
 const formatTime = (date, template) => dayjs(date).format(template);
 
 /**
@@ -9,23 +8,23 @@ const formatTime = (date, template) => dayjs(date).format(template);
  * @param fill 是否填充小数部分 0-不填充 1-填充第一位小数 2-填充两位小数
  */
 function priceFormat(price, fill = 0) {
-    if (isNaN(price) || price === null || price === Infinity) {
-        return price;
-    }
+  if (isNaN(price) || price === null || price === Infinity) {
+    return price;
+  }
 
-    let priceFormatValue = Math.round(parseFloat(`${price}`) * 10 ** 8) / 10 ** 8; // 恢复精度丢失
-    priceFormatValue = `${Math.ceil(priceFormatValue) / 100}`; // 向上取整，单位转换为元，转换为字符串
-    if (fill > 0) {
-        // 补充小数位数
-        if (priceFormatValue.indexOf('.') === -1) {
-            priceFormatValue = `${priceFormatValue}.`;
-        }
-        const n = fill - priceFormatValue.split('.')[1]?.length;
-        for (let i = 0; i < n; i++) {
-            priceFormatValue = `${priceFormatValue}0`;
-        }
+  let priceFormatValue = Math.round(parseFloat(`${price}`) * 10 ** 8) / 10 ** 8; // 恢复精度丢失
+  priceFormatValue = `${Math.ceil(priceFormatValue) / 100}`; // 向上取整，单位转换为元，转换为字符串
+  if (fill > 0) {
+    // 补充小数位数
+    if (priceFormatValue.indexOf('.') === -1) {
+      priceFormatValue = `${priceFormatValue}.`;
     }
-    return priceFormatValue;
+    const n = fill - priceFormatValue.split('.')[1]?.length;
+    for (let i = 0; i < n; i++) {
+      priceFormatValue = `${priceFormatValue}0`;
+    }
+  }
+  return priceFormatValue;
 }
 
 /**
@@ -36,45 +35,41 @@ function priceFormat(price, fill = 0) {
  * @param {number} [height] 可选，高度，不填时与width同值
  */
 const cosThumb = (url, width, height = width) => {
-    if (url.indexOf('?') > -1) {
-        return url;
-    }
+  if (url.indexOf('?') > -1) {
+    return url;
+  }
 
-    if (url.indexOf('http://') === 0) {
-        url = url.replace('http://', 'https://');
-    }
+  if (url.indexOf('http://') === 0) {
+    url = url.replace('http://', 'https://');
+  }
 
-    return `${url}?imageMogr2/thumbnail/${~~width}x${~~height}`;
+  return `${url}?imageMogr2/thumbnail/${~~width}x${~~height}`;
 };
 
 const get = (source, paths, defaultValue) => {
-    if (typeof paths === 'string') {
-        paths = paths
-            .replace(/\[/g, '.')
-            .replace(/\]/g, '')
-            .split('.')
-            .filter(Boolean);
-    }
-    const {length} = paths;
-    let index = 0;
-    while (source != null && index < length) {
-        source = source[paths[index++]];
-    }
-    return source === undefined || index === 0 ? defaultValue : source;
+  if (typeof paths === 'string') {
+    paths = paths.replace(/\[/g, '.').replace(/\]/g, '').split('.').filter(Boolean);
+  }
+  const { length } = paths;
+  let index = 0;
+  while (source != null && index < length) {
+    source = source[paths[index++]];
+  }
+  return source === undefined || index === 0 ? defaultValue : source;
 };
 let systemWidth = 0;
 /** 获取系统宽度，为了减少启动消耗所以在函数里边做初始化 */
 export const loadSystemWidth = () => {
-    if (systemWidth) {
-        return systemWidth;
-    }
-
-    try {
-        ({screenWidth: systemWidth, pixelRatio} = wx.getSystemInfoSync());
-    } catch (e) {
-        systemWidth = 0;
-    }
+  if (systemWidth) {
     return systemWidth;
+  }
+
+  try {
+    ({ screenWidth: systemWidth, pixelRatio } = wx.getSystemInfoSync());
+  } catch (e) {
+    systemWidth = 0;
+  }
+  return systemWidth;
 };
 
 /**
@@ -86,16 +81,16 @@ export const loadSystemWidth = () => {
  *
  */
 const rpx2px = (rpx, round = false) => {
-    loadSystemWidth();
+  loadSystemWidth();
 
-    // px / systemWidth = rpx / 750
-    const result = (rpx * systemWidth) / 750;
+  // px / systemWidth = rpx / 750
+  const result = (rpx * systemWidth) / 750;
 
-    if (round) {
-        return Math.floor(result);
-    }
+  if (round) {
+    return Math.floor(result);
+  }
 
-    return result;
+  return result;
 };
 
 /**
@@ -104,12 +99,11 @@ const rpx2px = (rpx, round = false) => {
  * @returns
  */
 const phoneEncryption = (phone) => {
-    return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+  return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 };
 
 // 内置手机号正则字符串
-const innerPhoneReg =
-    '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
+const innerPhoneReg = '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
 
 /**
  * 手机号正则校验
@@ -118,57 +112,57 @@ const innerPhoneReg =
  * @returns true - 校验通过 false - 校验失败
  */
 const phoneRegCheck = (phone) => {
-    const phoneRegExp = new RegExp(innerPhoneReg);
-    return phoneRegExp.test(phone);
+  const phoneRegExp = new RegExp(innerPhoneReg);
+  return phoneRegExp.test(phone);
 };
 
 // get请求
-const getRequest = (url,data = {}) => {
-    return new Promise((resolve, reject) => {
-        wx.request({
-            url: 'http://www.healthman.cn' + url,
-            data: data,
-            header: {
-                Accept: 'application/json',
-            },
-            success: (res) => {
-                resolve(res);
-            },
-            fail: () => {
-                reject('网络异常，请重试！');
-            },
-        });
+const getRequest = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `http://39.106.131.33${url}`,
+      data: data,
+      header: {
+        Accept: 'application/json'
+      },
+      success: (res) => {
+        resolve(res);
+      },
+      fail: () => {
+        reject('网络异常，请重试！');
+      }
     });
+  });
 };
 
 // post请求
-const postRequest = (url,data = {}) => {
+const postRequest = (url, data = {}) => {
   return new Promise((resolve, reject) => {
-      wx.request({
-          url: 'http://www.healthman.cn' + url,
-          data: data,
-          method: 'POST',
-          header: {
-              Accept: 'application/json',
-          },
-          success: (res) => {
-              resolve(res);
-          },
-          fail: () => {
-              reject('网络异常，请重试！');
-          },
-      });
+    wx.request({
+      url: `http://www.healthman.cn${url}`,
+      data: data,
+      method: 'POST',
+      header: {
+        Accept: 'application/json'
+      },
+      success: (res) => {
+        resolve(res);
+      },
+      fail: () => {
+        reject('网络异常，请重试！');
+      }
+    });
   });
 };
 
 module.exports = {
-    formatTime,
-    priceFormat,
-    cosThumb,
-    get,
-    rpx2px,
-    phoneEncryption,
-    phoneRegCheck,
-    getRequest,
-    postRequest
+  formatTime,
+  priceFormat,
+  cosThumb,
+  get,
+  rpx2px,
+  phoneEncryption,
+  phoneRegCheck,
+  getRequest,
+  postRequest
 };

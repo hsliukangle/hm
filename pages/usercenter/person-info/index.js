@@ -8,21 +8,21 @@ Page({
       avatarUrl: '',
       nickName: '',
       gender: 0,
-      phoneNumber: '',
+      phoneNumber: ''
     },
     showUnbindConfirm: false,
     pickerOptions: [
       {
         name: '男',
-        code: '1',
+        code: '1'
       },
       {
         name: '女',
-        code: '2',
-      },
+        code: '2'
+      }
     ],
     typeVisible: false,
-    genderMap: ['', '男', '女'],
+    genderMap: ['', '男', '女']
   },
   onLoad() {
     this.init();
@@ -34,23 +34,23 @@ Page({
     fetchPerson().then((personInfo) => {
       this.setData({
         personInfo,
-        'personInfo.phoneNumber': phoneEncryption(personInfo.phoneNumber),
+        'personInfo.phoneNumber': personInfo.phoneNumber ? phoneEncryption(personInfo.phoneNumber) : ''
       });
     });
   },
   onClickCell({ currentTarget }) {
     const { dataset } = currentTarget;
-    const { nickName } = this.data.personInfo;
+    const { nickname } = this.data.personInfo;
 
     switch (dataset.type) {
       case 'gender':
         this.setData({
-          typeVisible: true,
+          typeVisible: true
         });
         break;
       case 'name':
         wx.navigateTo({
-          url: `/pages/usercenter/name-edit/index?name=${nickName}`,
+          url: `/pages/usercenter/name-edit/index?name=${nickname}`
         });
         break;
       case 'avatarUrl':
@@ -63,7 +63,7 @@ Page({
   },
   onClose() {
     this.setData({
-      typeVisible: false,
+      typeVisible: false
     });
   },
   onConfirm(e) {
@@ -71,16 +71,16 @@ Page({
     this.setData(
       {
         typeVisible: false,
-        'personInfo.gender': value,
+        'personInfo.gender': value
       },
       () => {
         Toast({
           context: this,
           selector: '#t-toast',
           message: '设置成功',
-          theme: 'success',
+          theme: 'success'
         });
-      },
+      }
     );
   },
   async toModifyAvatar() {
@@ -98,7 +98,7 @@ Page({
               reject({ errMsg: '图片大小超出限制，请重新上传' });
             }
           },
-          fail: (err) => reject(err),
+          fail: (err) => reject(err)
         });
       });
       const tempUrlArr = tempFilePath.split('/');
@@ -107,7 +107,7 @@ Page({
         context: this,
         selector: '#t-toast',
         message: `已选择图片-${tempFileName}`,
-        theme: 'success',
+        theme: 'success'
       });
     } catch (error) {
       if (error.errMsg === 'chooseImage:fail cancel') return;
@@ -115,8 +115,8 @@ Page({
         context: this,
         selector: '#t-toast',
         message: error.errMsg || error.msg || '修改头像出错了',
-        theme: 'error',
+        theme: 'error'
       });
     }
-  },
+  }
 });

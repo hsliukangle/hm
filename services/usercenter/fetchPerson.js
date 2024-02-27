@@ -12,8 +12,8 @@ function mockFetchPerson() {
       provinceName: address.provinceName,
       provinceCode: address.provinceCode,
       cityName: address.cityName,
-      cityCode: address.cityCode,
-    },
+      cityCode: address.cityCode
+    }
   }));
 }
 
@@ -23,6 +23,6 @@ export function fetchPerson() {
     return mockFetchPerson();
   }
   return new Promise((resolve) => {
-    resolve('real api');
+    resolve(wx.getStorageSync('userInfo'));
   });
 }

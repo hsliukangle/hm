@@ -1,11 +1,11 @@
 Page({
   data: {
-    nameValue: '',
+    nameValue: ''
   },
   onLoad(options) {
     const { name } = options;
     this.setData({
-      nameValue: name,
+      nameValue: name
     });
   },
   onSubmit() {
@@ -13,7 +13,7 @@ Page({
   },
   clearContent() {
     this.setData({
-      nameValue: '',
+      nameValue: ''
     });
-  },
+  }
 });

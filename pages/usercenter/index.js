@@ -1,6 +1,4 @@
-/*import {
-  fetchUserCenter
-} from '../../services/usercenter/fetchUsercenter';*/
+import { fetchUserCenter } from '../../services/usercenter/fetchUsercenter';
 import Toast from 'tdesign-miniprogram/toast/index';
 
 const menuData = [
@@ -104,22 +102,20 @@ Page({
     wx.showModal({
       title: '温馨提示',
       content: '正在请求您的个人信息',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          wx.getUserProfile({
-            desc: '获取你的昵称、头像、地区及性别',
-            success: (res) => {
-              this.setData({
-                userInfo: res.userInfo,
-                currAuthStep: 2
-              });
-              wx.setStorageSync('userInfo', res.userInfo);
-            },
-            fail: (res) => {
-              //拒绝授权
-              console.log(res);
-            }
-          });
+          const userInfo = await fetchUserCenter();
+          if (userInfo) {
+            console.log(userInfo);
+            this.setData({
+              userInfo,
+              //menuData,
+              // orderTagInfos: info,
+              //customerServiceInfo,
+              currAuthStep: 2
+            });
+            wx.stopPullDownRefresh();
+          }
         } else if (res.cancel) {
           //拒绝授权 showErrorModal是自定义的提示
         }

@@ -13,7 +13,7 @@
     <t-cell
       title="昵称"
       arrow
-      note="{{personInfo.nickName}}"
+      note="{{personInfo.nickname}}"
       data-type="name"
       bind:click="onClickCell"
       t-class="t-cell-class"

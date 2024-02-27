@@ -14,20 +14,20 @@ Page({
     duration: '500',
     interval: 5000,
     navigation: {
-      type: 'dots',
+      type: 'dots'
     },
     swiperImageProps: {
-      mode: 'scaleToFill',
+      mode: 'scaleToFill'
     },
     goodListPagination: {
       index: 0,
       num: 20,
-      total: 0,
-    },
+      total: 0
+    }
   },
 
   privateData: {
-    tabIndex: 1,
+    tabIndex: 1
   },
 
   onShow() {
@@ -56,13 +56,13 @@ Page({
     wx.stopPullDownRefresh();
 
     this.setData({
-      pageLoading: true,
+      pageLoading: true
     });
     fetchHome().then(({ swiper, tabList }) => {
       this.setData({
         tabList,
         imgSrcs: swiper,
-        pageLoading: false,
+        pageLoading: false
       });
       this.loadGoodsList(true);
     });
@@ -79,13 +79,13 @@ Page({
 
   async loadGoodsList(fresh = false) {
     this.setData({
-      goodsListLoadStatus: 1,
+      goodsListLoadStatus: 1
     });
     const pageSize = this.data.goodListPagination.num;
     let pageIndex = this.data.goodListPagination.index + 1;
     if (fresh) {
       wx.pageScrollTo({
-        scrollTop: 0,
+        scrollTop: 0
       });
       pageIndex = 1;
     } else {
@@ -94,7 +94,7 @@ Page({
         this.data.goodListPagination.num * this.data.goodListPagination.index >= this.data.goodListPagination.total
       ) {
         this.setData({
-          goodsListLoadStatus: 2,
+          goodsListLoadStatus: 2
         });
         return false;
       }
@@ -103,20 +103,19 @@ Page({
     try {
       const cate = this.privateData.tabIndex;
       const nextList = await fetchGoodsList(cate, pageIndex, pageSize);
-      console.log(nextList.data);
       const goodListPagination = {
         total: nextList.total,
         index: pageIndex,
-        num: pageSize,
+        num: pageSize
       };
       this.setData({
         goodsList: fresh ? nextList.data : this.data.goodsList.concat(nextList.data),
         goodsListLoadStatus: 0,
-        goodListPagination: goodListPagination,
+        goodListPagination: goodListPagination
       });
     } catch (err) {
       this.setData({
-        goodsListLoadStatus: 3,
+        goodsListLoadStatus: 3
       });
     }
   },
@@ -124,7 +123,7 @@ Page({
   goodListClickHandle(e) {
     const { id } = e.detail.goods;
     wx.navigateTo({
-      url: `/pages/goods/details/index?spuid=${id}`,
+      url: `/pages/goods/details/index?spuid=${id}`
     });
   },
 
@@ -132,20 +131,20 @@ Page({
     Toast({
       context: this,
       selector: '#t-toast',
-      message: '点击加入购物车',
+      message: '点击加入购物车'
     });
   },
 
   navToSearchPage() {
     wx.navigateTo({
-      url: '/pages/goods/search/index',
+      url: '/pages/goods/search/index'
     });
   },
 
   navToActivityDetail({ detail }) {
     const { index: promotionID = 0 } = detail || {};
     wx.navigateTo({
-      url: `/pages/promotion-detail/index?promotion_id=${promotionID}`,
+      url: `/pages/promotion-detail/index?promotion_id=${promotionID}`
     });
-  },
+  }
 });
