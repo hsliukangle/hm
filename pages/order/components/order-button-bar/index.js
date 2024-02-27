@@ -1,10 +1,10 @@
 import Toast from 'tdesign-miniprogram/toast/index';
 import Dialog from 'tdesign-miniprogram/dialog/index';
 import { OrderButtonTypes } from '../../config';
-
+import { orderCancel } from '../../../../services/order/order';
 Component({
   options: {
-    addGlobalClass: true,
+    addGlobalClass: true
   },
   properties: {
     order: {
@@ -16,8 +16,8 @@ Component({
           this.setData({
             buttons: {
               left: [],
-              right: (goods.buttons || []).filter((b) => b.type == OrderButtonTypes.APPLY_REFUND),
-            },
+              right: (goods.buttons || []).filter((b) => b.type == OrderButtonTypes.APPLY_REFUND)
+            }
           });
           return;
         }
@@ -29,7 +29,7 @@ Component({
             if (button.type === OrderButtonTypes.INVITE_GROUPON && order.groupInfoVo) {
               const {
                 groupInfoVo: { groupId, promotionId, remainMember, groupPrice },
-                goodsList,
+                goodsList
               } = order;
               const goodsImg = goodsList[0] && goodsList[0].imgUrl;
               const goodsName = goodsList[0] && goodsList[0].name;
@@ -43,8 +43,8 @@ Component({
                   promotionId,
                   remainMember,
                   groupPrice,
-                  storeId: order.storeId,
-                },
+                  storeId: order.storeId
+                }
               };
             }
             return button;
@@ -58,27 +58,27 @@ Component({
         this.setData({
           buttons: {
             left: buttonsLeft,
-            right: buttonsRight,
-          },
+            right: buttonsRight
+          }
         });
-      },
+      }
     },
     goodsIndex: {
       type: Number,
-      value: null,
+      value: null
     },
     isBtnMax: {
       type: Boolean,
-      value: false,
-    },
+      value: false
+    }
   },
 
   data: {
     order: {},
     buttons: {
       left: [],
-      right: [],
-    },
+      right: []
+    }
   },
 
   methods: {
@@ -90,7 +90,7 @@ Component({
           this.onDelete(this.data.order);
           break;
         case OrderButtonTypes.CANCEL:
-          this.onCancel(this.data.order);
+          this.onCancel(this);
           break;
         case OrderButtonTypes.CONFIRM:
           this.onConfirm(this.data.order);
@@ -112,13 +112,25 @@ Component({
           break;
         case OrderButtonTypes.REBUY:
           this.onBuyAgain(this.data.order);
+          break;
         case OrderButtonTypes.SHOW_CODE:
           this.onShowCode(this.data.order);
       }
     },
+    onCancel: async (that) => {
+      console.log(that);
+      const res = await orderCancel(that.data.order.orderNo);
+      if (res.data.code === 200) {
+        Toast({
+          context: '',
+          selector: '#t-toast',
+          message: '取消成功',
+          icon: 'check-circle'
+        });
+        that.triggerEvent('refresh');
+      }
 
-    onCancel(data) {
-      const {
+      /*const {
         postRequest
       } = require('../../../../utils/util');
       postRequest("/api/order_cancel",{
@@ -130,12 +142,12 @@ Component({
             context: this,
             selector: '#t-toast',
             message: '取消成功',
-            icon: 'check-circle',
+            icon: 'check-circle'
           });
         }
       }).catch(err => {
         reject('取消订单错误', err);
-      });
+      });*/
     },
 
     onConfirm() {
@@ -143,14 +155,14 @@ Component({
         title: '确认是否已经收到货？',
         content: '',
         confirmBtn: '确认收货',
-        cancelBtn: '取消',
+        cancelBtn: '取消'
       })
         .then(() => {
           Toast({
             context: this,
             selector: '#t-toast',
             message: '你确认了确认收货',
-            icon: 'check-circle',
+            icon: 'check-circle'
           });
         })
         .catch(() => {
@@ -158,7 +170,7 @@ Component({
             context: this,
             selector: '#t-toast',
             message: '你取消了确认收货',
-            icon: 'check-circle',
+            icon: 'check-circle'
           });
         });
     },
@@ -168,7 +180,7 @@ Component({
         context: this,
         selector: '#t-toast',
         message: '你点击了去支付',
-        icon: 'check-circle',
+        icon: 'check-circle'
       });
     },
 
@@ -177,7 +189,7 @@ Component({
         context: this,
         selector: '#t-toast',
         message: '你点击了再次购买',
-        icon: 'check-circle',
+        icon: 'check-circle'
       });
     },
 
@@ -186,7 +198,7 @@ Component({
         context: this,
         selector: '#t-toast',
         message: '查看二维码',
-        icon: 'check-circle',
+        icon: 'check-circle'
       });
     },
 
@@ -203,7 +215,7 @@ Component({
         createTime: order.createTime,
         orderAmt: order.totalAmount,
         payAmt: order.amount,
-        canApplyReturn: true,
+        canApplyReturn: true
       };
       const paramsStr = Object.keys(params)
         .map((k) => `${k}=${params[k]}`)
@@ -216,7 +228,7 @@ Component({
         context: this,
         selector: '#t-toast',
         message: '你点击了查看退款',
-        icon: '',
+        icon: ''
       });
     },
 
@@ -226,8 +238,8 @@ Component({
       const title = order?.goodsList?.[0]?.title;
       const specs = order?.goodsList?.[0]?.specs;
       wx.navigateTo({
-        url: `/pages/goods/comments/create/index?specs=${specs}&title=${title}&orderNo=${order?.orderNo}&imgUrl=${imgUrl}`,
+        url: `/pages/goods/comments/create/index?specs=${specs}&title=${title}&orderNo=${order?.orderNo}&imgUrl=${imgUrl}`
       });
-    },
-  },
+    }
+  }
 });
