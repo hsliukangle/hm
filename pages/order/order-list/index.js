@@ -56,15 +56,14 @@ Page({
   },
 
   onReachBottom() {
-    if (this.data.listLoading === 0) {
+    /*if (this.data.listLoading === 0) {
       this.getOrderList(this.data.curTab);
-    }
+    }*/
   },
 
   onPageScroll(e) {
     this.pullDownRefresh && this.pullDownRefresh.onPageScroll(e);
   },
-
   onPullDownRefresh_(e) {
     const { callback } = e.detail;
     this.setData({
