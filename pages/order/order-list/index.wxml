@@ -20,6 +20,7 @@
     </t-tabs>
   </view>
   <t-pull-down-refresh
+    value="{{pullDownRefreshing}}"
     id="pull-down-refresh"
     normal-bar-height="{{200}}"
     max-bar-height="{{272}}"

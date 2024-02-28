@@ -80,7 +80,7 @@ page {
 
 .home-page-container .tabs-external__active {
   color: #333333 !important;
-  font-size: 32rpx;
+  font-size: 28rpx;
 }
 
 .home-page-container .tabs-external__track {

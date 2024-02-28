@@ -69,7 +69,7 @@ Page({
   },
 
   tabChangeHandle(e) {
-    this.privateData.tabIndex = e.detail.value;
+    this.privateData.tabIndex = e.detail.value + 1;
     this.loadGoodsList(true);
   },
 

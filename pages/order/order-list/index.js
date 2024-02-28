@@ -64,8 +64,8 @@ Page({
   onPageScroll(e) {
     this.pullDownRefresh && this.pullDownRefresh.onPageScroll(e);
   },
-  onPullDownRefresh_(e) {
-    const { callback } = e.detail;
+  onPullDownRefresh_() {
+    //const { callback } = e.detail;
     this.setData({
       pullDownRefreshing: true
     });
@@ -74,7 +74,7 @@ Page({
         this.setData({
           pullDownRefreshing: false
         });
-        callback && callback();
+        //callback && callback();
       })
       .catch((err) => {
         this.setData({
