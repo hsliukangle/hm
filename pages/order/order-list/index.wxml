@@ -75,7 +75,7 @@
     >
       <!-- 空态 -->
       <view slot="empty" class="empty-wrapper">
-        <t-empty t-class="t-empty-text" src="{{emptyImg}}">暂无相关订单</t-empty>
+        <t-empty t-class="t-empty-text" image="{{emptyImg}}" description="暂无相关订单"></t-empty>
       </view>
     </load-more>
   </t-pull-down-refresh>
