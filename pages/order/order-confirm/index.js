@@ -15,7 +15,7 @@ Page({
       abnormalDeliveryGoodsList: [], // 不能正常配送商品
       inValidGoodsList: [], // 失效或者库存不足
       limitGoodsList: [], //限购商品
-      couponList: [], //门店优惠券信息
+      couponList: [] //门店优惠券信息
     }, // 获取结算页详情 data
     orderCardList: [], // 仅用于商品卡片展示
     couponsShow: false, // 显示优惠券的弹框
@@ -26,7 +26,7 @@ Page({
       buyerPhone: '', //手机号
       buyerName: '', //个人或公司名称
       titleType: '', // 发票抬头 1-公司 2-个人
-      contentType: '', //发票内容 1-明细 2-类别
+      contentType: '' //发票内容 1-明细 2-类别
     },
     goodsRequestList: [],
     userAddressReq: null,
@@ -38,7 +38,7 @@ Page({
     couponList: [], //当前门店所选优惠券
     submitCouponList: [], //所有门店所选优惠券
     currentStoreId: null, //当前优惠券storeId
-    userAddress: null,
+    userAddress: null
   },
 
   payLock: false,
@@ -46,7 +46,7 @@ Page({
   tempNoteInfo: [],
   onLoad(options) {
     this.setData({
-      loading: true,
+      loading: true
     });
     this.handleOptionsParams(options);
   },
@@ -56,7 +56,7 @@ Page({
       //处理发票
       this.invoiceData = invoiceData;
       this.setData({
-        invoiceData,
+        invoiceData
       });
       wx.removeStorageSync('invoiceData');
     }
@@ -64,7 +64,7 @@ Page({
 
   init() {
     this.setData({
-      loading: true,
+      loading: true
     });
     const { goodsRequestList } = this;
     this.handleOptionsParams({ goodsRequestList });
@@ -74,7 +74,7 @@ Page({
     //let { goodsRequestList } = this; // 商品列表
     const goodsRequestList = JSON.parse(options.goodsRequestList);
     this.setData({
-      loading: false,
+      loading: false
     });
     this.initData(goodsRequestList);
     //let { userAddressReq } = this; // 收货地址
@@ -160,14 +160,14 @@ Page({
       selector: '#t-toast',
       message: '结算异常, 请稍后重试',
       duration: 2000,
-      icon: '',
+      icon: ''
     });
 
     setTimeout(() => {
       wx.navigateBack();
     }, 1500);
     this.setData({
-      loading: false,
+      loading: false
     });
   },
   getRequestGoodsList(storeGoodsList) {
@@ -196,7 +196,7 @@ Page({
       goodsName,
       skuId,
       storeName,
-      roomId,
+      roomId
     };
   },
   /*
@@ -236,7 +236,7 @@ __proto__: Object
           status: 0,
           statusDesc: '',
           amount: ele.storeTotalPayAmount,
-          goodsList: [],
+          goodsList: []
         }; // 订单卡片
         ele.skuDetailVos.forEach((item, index) => {
           orderCard.goodsList.push({
@@ -250,18 +250,18 @@ __proto__: Object
             num: item.quantity,
             skuId: item.skuId,
             spuId: item.spuId,
-            storeId: item.storeId,
+            storeId: item.storeId
           });
         });
 
         storeInfoList.push({
           storeId: ele.storeId,
           storeName: ele.storeName,
-          remark: '',
+          remark: ''
         });
         submitCouponList.push({
           storeId: ele.storeId,
-          couponList: ele.couponList || [],
+          couponList: ele.couponList || []
         });
         this.noteInfo.push('');
         this.tempNoteInfo.push('');
@@ -276,7 +276,7 @@ __proto__: Object
     getAddressPromise()
       .then((address) => {
         this.handleOptionsParams({
-          userAddressReq: { ...address, checked: true },
+          userAddressReq: { ...address, checked: true }
         });
       })
       .catch(() => {});
@@ -290,7 +290,7 @@ __proto__: Object
     }
 
     wx.navigateTo({
-      url: `/pages/usercenter/address/list/index?selectMode=1&isOrderSure=1${id}`,
+      url: `/pages/usercenter/address/list/index?selectMode=1&isOrderSure=1${id}`
     });
   },
   onNotes(e) {
@@ -298,7 +298,7 @@ __proto__: Object
     // 添加备注信息
     this.setData({
       dialogShow: true,
-      storeNoteIndex,
+      storeNoteIndex
     });
   },
   onInput(e) {
@@ -307,17 +307,17 @@ __proto__: Object
   },
   onBlur() {
     this.setData({
-      notesPosition: 'center',
+      notesPosition: 'center'
     });
   },
   onFocus() {
     this.setData({
-      notesPosition: 'self',
+      notesPosition: 'self'
     });
   },
   onTap() {
     this.setData({
-      placeholder: '',
+      placeholder: ''
     });
   },
   onNoteConfirm() {
@@ -328,7 +328,7 @@ __proto__: Object
 
     this.setData({
       dialogShow: false,
-      storeInfoList,
+      storeInfoList
     });
   },
   onNoteCancel() {
@@ -336,7 +336,7 @@ __proto__: Object
     const { storeNoteIndex } = this.data;
     this.noteInfo[storeNoteIndex] = this.tempNoteInfo[storeNoteIndex];
     this.setData({
-      dialogShow: false,
+      dialogShow: false
     });
   },
 
@@ -390,7 +390,7 @@ __proto__: Object
             selector: '#t-toast',
             message: res.msg || '提交订单超时，请稍后重试',
             duration: 2000,
-            icon: '',
+            icon: ''
           });
           setTimeout(() => {
             // 提交支付失败   返回购物车
@@ -406,7 +406,7 @@ __proto__: Object
             selector: '#t-toast',
             message: err.msg || '支付异常',
             duration: 2000,
-            icon: '',
+            icon: ''
           });
           this.init();
         } else if (err.code === 'ORDER_PAY_FAIL') {
@@ -415,7 +415,7 @@ __proto__: Object
             selector: '#t-toast',
             message: '支付失败',
             duration: 2000,
-            icon: 'close-circle',
+            icon: 'close-circle'
           });
           setTimeout(() => {
             wx.redirectTo({ url: '/order/list' });
@@ -426,7 +426,7 @@ __proto__: Object
             selector: '#t-toast',
             message: '支付失败，微信支付商户号设置有误，请商家重新检查支付设置。',
             duration: 2000,
-            icon: 'close-circle',
+            icon: 'close-circle'
           });
           setTimeout(() => {
             wx.redirectTo({ url: '/order/list' });
@@ -437,14 +437,14 @@ __proto__: Object
             selector: '#t-toast',
             message: err.msg || '提交支付超时，请稍后重试',
             duration: 2000,
-            icon: '',
+            icon: ''
           });
           setTimeout(() => {
             // 提交支付失败  返回购物车
             wx.navigateBack();
           }, 2000);
         }
-      },
+      }
     );
   },
 
@@ -459,7 +459,7 @@ __proto__: Object
       payAmt: totalPayAmount,
       interactId: interactId,
       tradeNo: tradeNo,
-      transactionId: transactionId,
+      transactionId: transactionId
     };
 
     /*if (channel === 'wechat') {
@@ -471,14 +471,14 @@ __proto__: Object
   hide() {
     // 隐藏 popup
     this.setData({
-      'settleDetailData.abnormalDeliveryGoodsList': [],
+      'settleDetailData.abnormalDeliveryGoodsList': []
     });
   },
   onReceipt() {
     // 跳转 开发票
     const invoiceData = this.invoiceData || {};
     wx.navigateTo({
-      url: `/pages/order/receipt/index?invoiceData=${JSON.stringify(invoiceData)}`,
+      url: `/pages/order/receipt/index?invoiceData=${JSON.stringify(invoiceData)}`
     });
   },
 
@@ -488,7 +488,7 @@ __proto__: Object
     const { selectedList } = e.detail;
     const tempSubmitCouponList = submitCouponList.map((storeCoupon) => {
       return {
-        couponList: storeCoupon.storeId === currentStoreId ? selectedList : storeCoupon.couponList,
+        couponList: storeCoupon.storeId === currentStoreId ? selectedList : storeCoupon.couponList
       };
     });
     const resSubmitCouponList = this.handleCouponList(tempSubmitCouponList);
@@ -500,7 +500,7 @@ __proto__: Object
     const { storeid } = e.currentTarget.dataset;
     this.setData({
       couponsShow: true,
-      currentStoreId: storeid,
+      currentStoreId: storeid
     });
   },
 
@@ -518,16 +518,16 @@ __proto__: Object
     const {
       detail: { value },
       currentTarget: {
-        dataset: { goods },
-      },
+        dataset: { goods }
+      }
     } = e;
     const index = this.goodsRequestList.findIndex(
-      ({ storeId, spuId, skuId }) => goods.storeId === storeId && goods.spuId === spuId && goods.skuId === skuId,
+      ({ storeId, spuId, skuId }) => goods.storeId === storeId && goods.spuId === spuId && goods.skuId === skuId
     );
     if (index >= 0) {
       // eslint-disable-next-line no-confusing-arrow
       const goodsRequestList = this.goodsRequestList.map((item, i) =>
-        i === index ? { ...item, quantity: value } : item,
+        i === index ? { ...item, quantity: value } : item
       );
       this.handleOptionsParams({ goodsRequestList });
     }
@@ -535,7 +535,7 @@ __proto__: Object
 
   onPopupChange() {
     this.setData({
-      popupShow: !this.data.popupShow,
+      popupShow: !this.data.popupShow
     });
-  },
+  }
 });
