@@ -52,7 +52,7 @@ const orderTagInfos = [
     title: '待评价',
     iconName: 'comment',
     orderNum: 0,
-    tabType: 60,
+    tabType: 50,
     status: 50
   },
   {

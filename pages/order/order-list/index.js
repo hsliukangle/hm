@@ -116,14 +116,14 @@ Page({
               parentOrderNo: order.order_no,
               status: order.status,
               statusDesc: order.status_name,
-              amount: order.price,
-              totalAmount: order.price,
+              amount: order.price_cent,
+              totalAmount: order.price_cent,
               createTime: order.created_at,
               goodsList: (order.related_service || []).map((goods) => ({
                 id: goods.id,
                 thumb: cosThumb(goods.main_image, 70),
                 title: goods.name,
-                price: goods.price
+                price: goods.current_price_cent
               })),
               buttons: order.button || []
             };

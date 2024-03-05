@@ -21,7 +21,7 @@ function realFetchGood(ID = 0){
       'etitle': "",
       'images':  ["https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09a.png", "https://cdn-we-retail.ym.tencent.com/tsr/goods/nz-09b.png"],
       'isPutOnSale': 1,
-      'limitInfo': [],
+      'limitInfo': [], 
       'maxLinePrice': 40000,
       'maxSalePrice': 29800,
       'minLinePrice': 29800,
