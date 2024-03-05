@@ -11,7 +11,7 @@
           <slot name="goods-price" />
         </view>
         <!-- 已选规格 -->
-        <view class="popup-sku__selected-spec">
+        <!--<view class="popup-sku__selected-spec">
           <view>选择：</view>
           <view wx:for="{{specList}}" wx:key="specId">
             <view
@@ -24,7 +24,7 @@
               {{selectedItem.specValue}}
             </view>
           </view>
-        </view>
+        </view>-->
       </view>
     </view>
     <view class="popup-sku-body">
@@ -50,7 +50,7 @@
           </block>
         </view>
       </view>
-      <view class="popup-sku-stepper-stock">
+      <!--<view class="popup-sku-stepper-stock">
         <view class="popup-sku-stepper-container">
           <view class="popup-sku__stepper-title">
             购买数量
@@ -58,7 +58,7 @@
           </view>
           <t-stepper value="{{buyNum}}" min="{{1}}" max="{{2}}" theme="filled" bind:change="handleBuyNumChange" />
         </view>
-      </view>
+      </view>-->
     </view>
     <view wx:if="{{outOperateStatus}}" class="single-confirm-btn {{!isStock ? 'disabled' : ''}}" bindtap="specsConfirm">
       确定

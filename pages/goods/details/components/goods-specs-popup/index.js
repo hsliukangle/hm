@@ -5,33 +5,33 @@ import Toast from 'tdesign-miniprogram/toast/index';
 Component({
   options: {
     multipleSlots: true,
-    addGlobalClass: true,
+    addGlobalClass: true
   },
 
   properties: {
     src: {
-      type: String,
+      type: String
     },
     title: String,
     show: {
       type: Boolean,
-      value: false,
+      value: false
     },
     limitBuyInfo: {
       type: String,
-      value: '',
+      value: ''
     },
     isStock: {
       type: Boolean,
-      value: true,
+      value: true
     },
     limitMaxCount: {
       type: Number,
-      value: 999,
+      value: 999
     },
     limitMinCount: {
       type: Number,
-      value: 1,
+      value: 1
     },
     skuList: {
       type: Array,
@@ -42,7 +42,7 @@ Component({
             this.initData();
           }
         }
-      },
+      }
     },
     specList: {
       type: Array,
@@ -51,25 +51,25 @@ Component({
         if (specList && specList.length > 0) {
           this.initData();
         }
-      },
+      }
     },
     outOperateStatus: {
       type: Boolean,
-      value: false,
+      value: false
     },
     hasAuth: {
       type: Boolean,
-      value: false,
+      value: false
     },
     count: {
       type: Number,
       value: 1,
       observer(count) {
         this.setData({
-          buyNum: count,
+          buyNum: count
         });
-      },
-    },
+      }
+    }
   },
 
   initStatus: false,
@@ -78,7 +78,7 @@ Component({
 
   data: {
     buyNum: 1,
-    isAllSelectedSku: false,
+    isAllSelectedSku: false
   },
 
   methods: {
@@ -98,7 +98,7 @@ Component({
         selectedSku[item.specId] = '';
       });
       this.setData({
-        specList,
+        specList
       });
       this.selectSpecObj = {};
       this.selectedSku = {};
@@ -122,7 +122,7 @@ Component({
       });
       return {
         hasStock,
-        specsArray: array,
+        specsArray: array
       };
     },
 
@@ -135,7 +135,6 @@ Component({
       } else {
         selectSpecObj[specId] = [];
       }
-
       const itemAllSpecArray = [];
       const itemUnSelectArray = [];
       const itemSelectArray = [];
@@ -182,7 +181,7 @@ Component({
               }
               n.hasStockObj.hasStock = true;
               return n;
-            },
+            }
           );
           if (specSelectStatus) {
             selectSpecObj[item.specId] = this.flatten(itemSelectArray);
@@ -216,7 +215,7 @@ Component({
         });
       }
       this.setData({
-        specList,
+        specList
       });
     },
 
@@ -250,7 +249,7 @@ Component({
           selector: '#t-toast',
           message: '该规格已售罄',
           icon: '',
-          duration: 1000,
+          duration: 1000
         });
         return;
       }
@@ -271,18 +270,18 @@ Component({
       if (!isAllSelectedSku) {
         this.setData({
           selectSkuSellsPrice: 0,
-          selectSkuImg: '',
+          selectSkuImg: ''
         });
       }
       this.setData({
         specList,
-        isAllSelectedSku,
+        isAllSelectedSku
       });
       this.selectedSku = selectedSku;
       this.triggerEvent('change', {
         specList,
         selectedSku,
-        isAllSelectedSku,
+        isAllSelectedSku
       });
     },
 
@@ -294,7 +293,7 @@ Component({
 
     handlePopupHide() {
       this.triggerEvent('closeSpecsPopup', {
-        show: false,
+        show: false
       });
     },
 
@@ -315,25 +314,25 @@ Component({
       const { isStock } = this.properties;
       if (!isStock) return;
       this.triggerEvent('buyNow', {
-        isAllSelectedSku,
+        isAllSelectedSku
       });
     },
 
     // 总处理
     setBuyNum(buyNum) {
       this.setData({
-        buyNum,
+        buyNum
       });
       this.triggerEvent('changeNum', {
-        buyNum,
+        buyNum
       });
     },
 
     handleBuyNumChange(e) {
       const { value } = e.detail;
       this.setData({
-        buyNum: value,
+        buyNum: value
       });
-    },
-  },
+    }
+  }
 });

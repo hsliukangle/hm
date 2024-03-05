@@ -3,10 +3,10 @@
 <wxs module="handleInvoice" src="./handleInvoice.wxs" />
 <wxs module="getNotes" src="./getNotes.wxs" />
 <view class="order-sure" wx:if="{{!loading}}">
-  <address-card addressData="{{userAddress}}" bind:addclick="onGotoAddress" bind:addressclick="onGotoAddress" />
+  <!-- <address-card addressData="{{userAddress}}" bind:addclick="onGotoAddress" bind:addressclick="onGotoAddress" />-->
   <view
     class="order-wrapper"
-    wx:for="{{settleDetailData.storeGoodsList}}"
+    wx:for="{{settleDetailData}}"
     wx:for-item="stores"
     wx:for-index="storeIndex"
     wx:key="storeIndex"
@@ -15,36 +15,32 @@
       <t-icon prefix="wr" size="40rpx" color="#333333" name="store" class="store-logo" />
       {{stores.storeName}}
     </view>
-    <view
+    <!-- <view
       wx:if="{{orderCardList[storeIndex].goodsList.length > 0}}"
       wx:for="{{orderCardList[storeIndex].goodsList}}"
       wx:for-item="goods"
       wx:for-index="gIndex"
       wx:key="id"
       class="goods-wrapper"
-    >
-      <t-image src="{{goods.thumb}}" t-class="goods-image" mode="aspectFill" />
+    > -->
+    <view class="goods-wrapper">
+      <t-image src="{{stores.thumb}}" t-class="goods-image" mode="aspectFill" />
       <view class="goods-content">
-        <view class="goods-title">{{goods.title}}</view>
-        <view>{{goods.specs}}</view>
+        <view class="goods-title">{{stores.title}}</view>
+        <view>{{stores.specs}}</view>
       </view>
       <view class="goods-right">
-        <price wr-class="goods-price" price="{{goods.price}}" fill="{{true}}" decimalSmaller />
-        <view class="goods-num">x{{goods.num}}</view>
+        <price wr-class="goods-price" price="{{stores.price}}" fill="{{true}}" decimalSmaller />
+        <!--<view class="goods-num">x{{stores.num}}</view>-->
       </view>
     </view>
   </view>
   <view class="pay-detail">
     <view class="pay-item">
       <text>商品总额</text>
-      <price
-        fill
-        decimalSmaller
-        wr-class="pay-item__right font-bold"
-        price="{{settleDetailData.totalSalePrice || '0'}}"
-      />
+      <price fill decimalSmaller wr-class="pay-item__right font-bold" price="{{settleDetailData[0].price || '0'}}" />
     </view>
-    <view class="pay-item">
+    <!--<view class="pay-item">
       <text>运费</text>
       <view class="pay-item__right font-bold">
         <block wx:if="{{settleDetailData.totalDeliveryFee && settleDetailData.totalDeliveryFee != 0}}">
@@ -53,8 +49,8 @@
         </block>
         <text wx:else>免运费</text>
       </view>
-    </view>
-    <view class="pay-item">
+    </view>-->
+    <!--<view class="pay-item">
       <text>活动优惠</text>
       <view class="pay-item__right primary font-bold">
         -
@@ -77,15 +73,15 @@
         <text wx:else>无可用</text>
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
-    </view>
-    <view class="pay-item" wx:if="{{settleDetailData.invoiceSupport}}">
+    </view>-->
+    <!--<view class="pay-item" wx:if="{{settleDetailData.invoiceSupport}}">
       <text>发票</text>
       <view class="pay-item__right" catchtap="onReceipt">
         <text>{{handleInvoice(invoiceData)}}</text>
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
-    </view>
-    <view class="pay-item">
+    </view>-->
+    <!--<view class="pay-item">
       <text>订单备注</text>
       <view class="pay-item__right" data-storenoteindex="{{0}}" catchtap="onNotes">
         <text class="pay-remark"
@@ -93,21 +89,19 @@
         >
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
-    </view>
+    </view>-->
   </view>
   <view class="amount-wrapper">
     <view class="pay-amount">
-      <text class="order-num">共{{settleDetailData.totalGoodsCount}}件</text>
+      <!--<text class="order-num">共{{settleDetailData.totalGoodsCount}}件</text>-->
       <text>小计</text>
-      <price class="total-price" price="{{settleDetailData.totalPayAmount}}" fill="{{false}}" decimalSmaller />
+      <price class="total-price" price="{{settleDetailData[0].price}}" fill="{{false}}" decimalSmaller />
     </view>
   </view>
   <view class="wx-pay-cover">
     <view class="wx-pay">
-      <price decimalSmaller fill class="price" price="{{settleDetailData.totalPayAmount || '0'}}" />
-      <view class="submit-btn {{ settleDetailData.settleType === 1 ? '':'btn-gray'}}" bindtap="submitOrder">
-        提交订单
-      </view>
+      <price decimalSmaller fill class="price" price="{{settleDetailData[0].price || '0'}}" />
+      <view class="submit-btn" bindtap="submitOrder"> 提交订单 </view>
     </view>
   </view>
   <t-dialog

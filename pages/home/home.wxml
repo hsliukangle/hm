@@ -32,7 +32,7 @@
       space-evenly="{{false}}"
       bind:change="tabChangeHandle"
     >
-      <t-tab-panel wx:for="{{tabList}}" wx:key="{{item.id}}" label="{{item.name}}" value="{{index}}" />
+      <t-tab-panel wx:for="{{tabList}}" wx:key="id" label="{{item.name}}" value="{{index}}" />
     </t-tabs>
   </view>
 
