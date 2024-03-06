@@ -450,16 +450,16 @@ __proto__: Object
 
   // 处理支付
   handlePay(data, settleDetailData) {
-    const { payInfo, tradeNo, interactId, transactionId } = data;
-    const { totalAmount, totalPayAmount } = settleDetailData;
+    const { payInfo, order_no, interactId, transactionId } = data;
+    const { price } = settleDetailData;
     const payOrderInfo = {
-      payInfo: payInfo,
-      orderId: tradeNo,
-      orderAmt: totalAmount,
-      payAmt: totalPayAmount,
-      interactId: interactId,
-      tradeNo: tradeNo,
-      transactionId: transactionId
+      payInfo: payInfo || {},
+      orderId: order_no,
+      orderAmt: price,
+      payAmt: price,
+      tradeNo: order_no,
+      transactionId: transactionId || '',
+      interactId: interactId || ''
     };
 
     /*if (channel === 'wechat') {

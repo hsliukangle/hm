@@ -240,7 +240,8 @@ Page({
       goodsName: this.data.details.name,
       price: this.data.details.current_price_cent,
       title: this.data.details.name,
-      thumb: this.data.details.main_image
+      thumb: this.data.details.main_image,
+      shopName: this.data.details.shop_name
     };
     let urlQueryStr = obj2Params({
       goodsRequestList: JSON.stringify([query])

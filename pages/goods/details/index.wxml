@@ -96,6 +96,9 @@
       {{details.desc}}
       <!-- <t-image t-class="desc-content__img" src="{{item}}" mode="widthFix" />-->
     </view>
+    <view wx:if="{{details.details.length > 0}}" wx:for="{{details.details}}" wx:key="index">
+      <t-image t-class="desc-content__img" src="{{item}}" mode="widthFix" />
+    </view>
   </view>
   <view class="goods-bottom-operation">
     <buy-bar

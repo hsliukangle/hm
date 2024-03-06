@@ -13,7 +13,7 @@
   >
     <view class="store-wrapper">
       <t-icon prefix="wr" size="40rpx" color="#333333" name="store" class="store-logo" />
-      {{stores.storeName}}
+      {{stores.shopName}}
     </view>
     <!-- <view
       wx:if="{{orderCardList[storeIndex].goodsList.length > 0}}"
