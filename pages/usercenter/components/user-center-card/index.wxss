@@ -46,3 +46,8 @@
 .user-center-card__icon {
   line-height: 96rpx;
 }
+.user_group_name{
+  width: 40%;
+  text-align: right;
+  font-size: 24rpx;
+}

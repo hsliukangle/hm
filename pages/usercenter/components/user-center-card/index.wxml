@@ -4,6 +4,7 @@
     <view class="user-center-card__header" bind:tap="gotoUserEditPage">
       <t-avatar image="{{userInfo.avatarUrl || defaultAvatarUrl}}" class="user-center-card__header__avatar" />
       <view class="user-center-card__header__name">{{'请登录'}}</view>
+      <!--{{userInfo.group_name}}-->
     </view>
   </block>
   <!-- 已登录但未授权用户信息情况 -->
@@ -17,6 +18,7 @@
       </view>
       <!-- 不需要授权用户信息，仍然触发gotoUserEditPage事件 -->
       <view class="user-center-card__header__transparent" bind:tap="gotoUserEditPage" wx:else></view>
+      <view class="user_group_name">{{userInfo.status===30?userInfo.group_name:''}}</view>
     </view>
   </block>
   <!-- 已登录且已经授权用户信息的情况 -->

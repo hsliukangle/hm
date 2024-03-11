@@ -1,0 +1,15 @@
+<view class="name-edit">
+  <t-input
+    borderless
+    model:value="{{codeValue}}"
+    placeholder="请输入邀请码"
+    label="邀请码"
+    clearable
+    bind:clear="clearContent"
+  />
+  <!--<view class="name-edit__input&#45;&#45;desc"> 最多可输入15个字 </view>-->
+  <view class="name-edit__wrapper">
+    <t-button block shape="round" disabled="{{!codeValue}}" bind:tap="onSubmit">保存</t-button>
+  </view>
+</view>
+<t-message id="t-message" />

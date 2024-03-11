@@ -1,15 +1,14 @@
-import { fetchPerson } from '../../../services/usercenter/fetchPerson';
-import { phoneEncryption } from '../../../utils/util';
+//import Message from 'tdesign-miniprogram/message/index';
 import Toast from 'tdesign-miniprogram/toast/index';
-
+import { bindGroup } from '../../../services/usercenter/usercenter';
 Page({
   data: {
-    personInfo: {
-      avatarUrl: '',
-      nickName: '',
-      gender: 0,
-      phoneNumber: ''
-    },
+    personInfo: {},
+    nickname: '',
+    group_name: '',
+    job_num: '',
+    member_id: '',
+    invite_code: '',
     showUnbindConfirm: false,
     pickerOptions: [
       {
@@ -25,41 +24,73 @@ Page({
     genderMap: ['', '男', '女']
   },
   onLoad() {
-    this.init();
+    const personInfo = wx.getStorageSync('userInfo');
+    if (personInfo) {
+      this.setData({
+        personInfo,
+        group_name: personInfo.group_name,
+        job_num: personInfo.job_num,
+        member_id: personInfo.id,
+        nickname: personInfo.nickname,
+        invite_code: personInfo.invite_code
+      });
+    }
   },
-  init() {
+  /*init() {
     this.fetchData();
-  },
-  fetchData() {
+  },*/
+  /* fetchData() {
     fetchPerson().then((personInfo) => {
       this.setData({
         personInfo,
         'personInfo.phoneNumber': personInfo.phoneNumber ? phoneEncryption(personInfo.phoneNumber) : ''
       });
     });
-  },
-  onClickCell({ currentTarget }) {
-    const { dataset } = currentTarget;
-    const { nickname } = this.data.personInfo;
-
-    switch (dataset.type) {
-      case 'gender':
-        this.setData({
-          typeVisible: true
+  },*/
+  onSubmit() {
+    const that = this;
+    const { group_name = '', job_num = '', member_id } = this.data;
+    bindGroup({ group_name, job_num, member_id }).then((res) => {
+      if (res.code === 200) {
+        wx.setStorageSync('userInfo', res.data);
+        Toast({
+          context: that,
+          selector: '#t-toast',
+          message: '保存成功',
+          theme: 'success',
+          direction: 'column'
         });
-        break;
-      case 'name':
-        wx.navigateTo({
-          url: `/pages/usercenter/name-edit/index?name=${nickname}`
-        });
-        break;
-      case 'avatarUrl':
-        this.toModifyAvatar();
-        break;
-      default: {
-        break;
+        setTimeout(() => {
+          wx.navigateBack({ backRefresh: true });
+        }, 2000);
       }
-    }
+    });
+    /*if(group_name){
+      if(job_num){
+
+      }else{
+        Message.warning({
+          context: this,
+          offset: [20, 32],
+          duration: 1500,
+          content: '公司名称不能为空'
+        });
+      }
+
+    }else{
+      Message.warning({
+        context: this,
+        offset: [20, 32],
+        duration: 5000,
+        content: '这是一条需要用户关注到的警示通知'
+      });
+    }*/
+  },
+
+  onClickCell() {
+    wx.navigateTo({
+      url: `/pages/usercenter/code-edit/index`
+    });
   },
   onClose() {
     this.setData({

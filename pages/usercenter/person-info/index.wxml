@@ -1,54 +1,40 @@
 <view class="person-info">
+  <t-input disabled align="right" model:value="{{nickname}}" placeholder="请输入昵称" label="昵称" />
+  <t-input
+    disabled="{{group_name}}"
+    align="right"
+    model:value="{{personInfo.status===20?'审核中':group_name}}"
+    placeholder="请输入公司名称"
+    label="公司名称"
+  />
+  <t-input
+    disabled="{{job_num}}"
+    align="right"
+    model:value="{{personInfo.status===20?'审核中':job_num}}"
+    placeholder="请输入工号"
+    label="工号"
+  />
   <t-cell-group>
     <t-cell
-      title="头像"
-      center="{{true}}"
-      data-type="avatarUrl"
-      bind:click="onClickCell"
+      title="邀请码"
       arrow
-      t-class-left="order-group__left"
-    >
-      <t-image slot="note" src="{{personInfo.avatarUrl}}" t-class="avatarUrl" mode="aspectFill" />
-    </t-cell>
-    <t-cell
-      title="昵称"
-      arrow
-      note="{{personInfo.nickname}}"
-      data-type="name"
-      bind:click="onClickCell"
-      t-class="t-cell-class"
-      t-class-left="order-group__left"
-    />
-    <t-cell
-      title="性别"
-      arrow
-      note="{{genderMap[personInfo.gender]}}"
-      data-type="gender"
-      bind:click="onClickCell"
-      t-class="t-cell-class"
-      t-class-left="order-group__left"
-    />
-    <t-cell
-      bordered="{{false}}"
-      title="手机号"
-      arrow
-      note="{{personInfo.phoneNumber ? personInfo.phoneNumber : '去绑定手机号'}}"
-      data-type="phoneNumber"
+      note="{{invite_code}}"
       bind:click="onClickCell"
       t-class="t-cell-class"
       t-class-left="order-group__left"
     />
   </t-cell-group>
+  <!-- <t-input
+          align="right"
+          model:value="{{nameValue}}"
+          placeholder="请输入文字"
+          label="邀请码"
+          clearable
+          bind:clear="clearContent"
+  />-->
 </view>
 <view class="person-info__wrapper">
-  <view class="person-info__btn" bind:tap="openUnbindConfirm"> 切换账号登录 </view>
+  <t-button block shape="round" disabled="{{!nickname||group_name&&job_num}}" bind:tap="onSubmit">保存</t-button>
 </view>
-<t-select-picker
-  show="{{typeVisible}}"
-  picker-options="{{pickerOptions}}"
-  title="选择性别"
-  value="{{personInfo.gender}}"
-  bind:confirm="onConfirm"
-  bind:close="onClose"
-/>
+<t-message id="t-message" />
 <t-toast id="t-toast" />
