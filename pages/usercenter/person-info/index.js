@@ -1,6 +1,8 @@
 //import Message from 'tdesign-miniprogram/message/index';
 import Toast from 'tdesign-miniprogram/toast/index';
+import Message from 'tdesign-miniprogram/message/index';
 import { bindGroup } from '../../../services/usercenter/usercenter';
+import {fetchUserCenter} from "../../../services/usercenter/fetchUsercenter";
 Page({
   data: {
     personInfo: {},
@@ -23,22 +25,26 @@ Page({
     typeVisible: false,
     genderMap: ['', '男', '女']
   },
-  onLoad() {
+  async onLoad() {
+    await fetchUserCenter()
+    this.init()
+  },
+  onShow(){
+    this.init()
+  },
+  init() {
     const personInfo = wx.getStorageSync('userInfo');
     if (personInfo) {
       this.setData({
         personInfo,
-        group_name: personInfo.group_name,
-        job_num: personInfo.job_num,
+        group_name:personInfo.status===20?"审核中": personInfo.group_name,
+        job_num:personInfo.status===20?"审核中": personInfo.job_num,
         member_id: personInfo.id,
         nickname: personInfo.nickname,
         invite_code: personInfo.invite_code
       });
     }
   },
-  /*init() {
-    this.fetchData();
-  },*/
   /* fetchData() {
     fetchPerson().then((personInfo) => {
       this.setData({
@@ -50,21 +56,31 @@ Page({
   onSubmit() {
     const that = this;
     const { group_name = '', job_num = '', member_id } = this.data;
-    bindGroup({ group_name, job_num, member_id }).then((res) => {
-      if (res.code === 200) {
-        wx.setStorageSync('userInfo', res.data);
-        Toast({
-          context: that,
-          selector: '#t-toast',
-          message: '保存成功',
-          theme: 'success',
-          direction: 'column'
-        });
-        setTimeout(() => {
-          wx.navigateBack({ backRefresh: true });
-        }, 2000);
-      }
-    });
+    if(group_name){
+      bindGroup({ group_name, job_num, member_id }).then((res) => {
+        if (res.code === 200) {
+          wx.setStorageSync('userInfo', res.data);
+          Toast({
+            context: that,
+            selector: '#t-toast',
+            message: '保存成功',
+            theme: 'success',
+            direction: 'column'
+          });
+          setTimeout(() => {
+            wx.navigateBack({ backRefresh: true });
+          }, 2000);
+        }
+      });
+    }else{
+      Message.warning({
+        context: that,
+        offset: [20, 32],
+        duration: 2000,
+        content: "公司名称不能为空！"
+      });
+    }
+
     /*if(group_name){
       if(job_num){
 
@@ -88,9 +104,26 @@ Page({
   },
 
   onClickCell() {
-    wx.navigateTo({
-      url: `/pages/usercenter/code-edit/index`
-    });
+    if(this.data.personInfo.status===20){
+      Message.warning({
+        context: this,
+        offset: [20, 32],
+        duration: 5000,
+        content: '审核中不能绑定新的邀请码！'
+      });
+    }else if(this.data.personInfo.status===30){
+      Message.warning({
+        context: this,
+        offset: [20, 32],
+        duration: 5000,
+        content: '已绑定公司不能绑定新的邀请码！'
+      });;
+    }else if(!this.data.invite_code){
+      wx.navigateTo({
+        url: `/pages/usercenter/code-edit/index`
+      });
+    }
+
   },
   onClose() {
     this.setData({

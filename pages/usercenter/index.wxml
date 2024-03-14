@@ -45,3 +45,4 @@
   </view>
 </t-popup>
 <t-toast id="t-toast" />
+<t-message id="t-message" />

@@ -2,10 +2,10 @@ import Toast from 'tdesign-miniprogram/toast/index';
 import { fetchGood } from '../../../services/good/fetchGood';
 import {
   getGoodsDetailsCommentList,
-  getGoodsDetailsCommentsCount
+  getGoodsDetailsCommentsCount,
 } from '../../../services/good/fetchGoodsDetailsComments';
 import { cdnBase } from '../../../config/index';
-
+import { isLoginStatus } from '../../../utils/isLoginStatus';
 const imgPrefix = `${cdnBase}/`;
 
 const recLeftImg = `${imgPrefix}common/rec-left.png`;
@@ -26,7 +26,7 @@ Page({
       goodCount: 0,
       goodRate: 0,
       hasImageCount: 0,
-      middleCount: 0
+      middleCount: 0,
     },
     isShowPromotionPop: false,
     recLeftImg,
@@ -35,12 +35,12 @@ Page({
     goodsTabArray: [
       {
         name: '商品',
-        value: '' // 空字符串代表置顶
+        value: '', // 空字符串代表置顶
       },
       {
         name: '详情',
-        value: 'goods-page'
-      }
+        value: 'goods-page',
+      },
     ],
     storeLogo: `${imgPrefix}common/store-logo.png`,
     storeName: '云mall标准版旗舰店',
@@ -48,8 +48,8 @@ Page({
       {
         title: '首页',
         url: '/pages/home/home',
-        iconName: 'home'
-      }
+        iconName: 'home',
+      },
     ],
     isStock: true,
     cartNum: 0,
@@ -72,18 +72,18 @@ Page({
     list: [],
     spuId: '',
     navigation: {
-      type: 'fraction'
+      type: 'fraction',
     },
     current: 0,
     autoplay: true,
     duration: 500,
     interval: 5000,
-    soldNum: 0 // 已售数量
+    soldNum: 0, // 已售数量
   },
 
   handlePopupHide() {
     this.setData({
-      isSpuSelectPopupShow: false
+      isSpuSelectPopupShow: false,
     });
   },
 
@@ -91,12 +91,13 @@ Page({
     this.setData({
       buyType: type || 0,
       outOperateStatus: type >= 1,
-      isSpuSelectPopupShow: true
+      isSpuSelectPopupShow: true,
     });
   },
-
   buyItNow() {
-    this.showSkuSelectPopup(1);
+    if (isLoginStatus(getCurrentPages())) {
+      this.showSkuSelectPopup(1);
+    }
   },
 
   /*toAddCart() {
@@ -106,7 +107,7 @@ Page({
   toNav(e) {
     const { url } = e.detail;
     wx.switchTab({
-      url: url
+      url: url,
     });
   },
 
@@ -115,7 +116,7 @@ Page({
     const { images } = this.data.details;
     wx.previewImage({
       current: images[index],
-      urls: images // 需要预览的图片http链接列表
+      urls: images, // 需要预览的图片http链接列表
     });
   },
 
@@ -129,11 +130,11 @@ Page({
     const { selectedSku, isAllSelectedSku } = e.detail;
     if (!isAllSelectedSku) {
       this.setData({
-        selectSkuSellsPrice: 0
+        selectSkuSellsPrice: 0,
       });
     }
     this.setData({
-      isAllSelectedSku
+      isAllSelectedSku,
     });
     this.getSkuItem(specList, selectedSku);
   },
@@ -159,16 +160,16 @@ Page({
     if (skuItem) {
       this.setData({
         selectItem: skuItem,
-        selectSkuSellsPrice: skuItem.price || 0
+        selectSkuSellsPrice: skuItem.price || 0,
       });
     } else {
       this.setData({
         selectItem: null,
-        selectSkuSellsPrice: 0
+        selectSkuSellsPrice: 0,
       });
     }
     this.setData({
-      specImg: skuItem && skuItem.skuImage ? skuItem.skuImage : primaryImage
+      specImg: skuItem && skuItem.skuImage ? skuItem.skuImage : primaryImage,
     });
   },
 
@@ -199,11 +200,11 @@ Page({
   selectSpecsName(selectSpecsName) {
     if (selectSpecsName) {
       this.setData({
-        selectedAttrStr: selectSpecsName
+        selectedAttrStr: selectSpecsName,
       });
     } else {
       this.setData({
-        selectedAttrStr: ''
+        selectedAttrStr: '',
       });
     }
   },
@@ -215,7 +216,7 @@ Page({
       selector: '#t-toast',
       message: isAllSelectedSku ? '点击加入购物车' : '请选择规格',
       icon: '',
-      duration: 1000
+      duration: 1000,
     });
   },
 
@@ -241,15 +242,15 @@ Page({
       price: this.data.details.current_price_cent,
       title: this.data.details.name,
       thumb: this.data.details.main_image,
-      shopName: this.data.details.shop_name
+      shopName: this.data.details.shop_name,
     };
     let urlQueryStr = obj2Params({
-      goodsRequestList: JSON.stringify([query])
+      goodsRequestList: JSON.stringify([query]),
     });
     urlQueryStr = urlQueryStr ? `?${urlQueryStr}` : '';
     const path = `/pages/order/order-confirm/index${urlQueryStr}`;
     wx.navigateTo({
-      url: path
+      url: path,
     });
   },
 
@@ -269,26 +270,26 @@ Page({
 
   changeNum(e) {
     this.setData({
-      buyNum: e.detail.buyNum
+      buyNum: e.detail.buyNum,
     });
   },
 
   closePromotionPopup() {
     this.setData({
-      isShowPromotionPop: false
+      isShowPromotionPop: false,
     });
   },
 
   promotionChange(e) {
     const { index } = e.detail;
     wx.navigateTo({
-      url: `/pages/promotion-detail/index?promotion_id=${index}`
+      url: `/pages/promotion-detail/index?promotion_id=${index}`,
     });
   },
 
   showPromotionPopup() {
     this.setData({
-      isShowPromotionPop: true
+      isShowPromotionPop: true,
     });
   },
 
@@ -313,7 +314,7 @@ updated_at: "2024-02-05 21:22:07"
     fetchGood(spuId).then((res) => {
       if (res.code === 200 && res.data) {
         this.setData({
-          details: res.data
+          details: res.data,
         });
         console.log(this.data.details);
       }
@@ -333,9 +334,9 @@ updated_at: "2024-02-05 21:22:07"
               userName: item.userName || '',
               commentScore: item.commentScore,
               commentContent: item.commentContent || '用户未填写评价',
-              userHeadUrl: item.isAnonymity ? this.anonymityAvatar : item.userHeadUrl || this.anonymityAvatar
+              userHeadUrl: item.isAnonymity ? this.anonymityAvatar : item.userHeadUrl || this.anonymityAvatar,
             };
-          })
+          }),
         };
         this.setData(nextState);
       }
@@ -355,7 +356,7 @@ updated_at: "2024-02-05 21:22:07"
     const customInfo = {
       imageUrl: this.data.details.primaryImage,
       title: this.data.details.title + shareSubTitle,
-      path: `/pages/goods/details/index?spuId=${this.data.spuId}`
+      path: `/pages/goods/details/index?spuId=${this.data.spuId}`,
     };
     return customInfo;
   },
@@ -375,8 +376,8 @@ updated_at: "2024-02-05 21:22:07"
             /** 后端返回百分比后数据但没有限制位数 */
             goodRate: Math.floor(goodRate * 10) / 10,
             hasImageCount: parseInt(`${hasImageCount}`),
-            middleCount: parseInt(`${middleCount}`)
-          }
+            middleCount: parseInt(`${middleCount}`),
+          },
         };
         this.setData(nextState);
       }
@@ -388,17 +389,17 @@ updated_at: "2024-02-05 21:22:07"
   /** 跳转到评价列表 */
   navToCommentsListPage() {
     wx.navigateTo({
-      url: `/pages/goods/comments/index?spuId=${this.data.spuId}`
+      url: `/pages/goods/comments/index?spuId=${this.data.spuId}`,
     });
   },
 
   onLoad(query) {
     const { spuid } = query;
     this.setData({
-      spuId: spuid
+      spuId: spuid,
     });
     this.getDetail(spuid);
     //this.getCommentsList(spuid);
     //this.getCommentsStatistics(spuid);
-  }
+  },
 });

@@ -146,6 +146,22 @@ page {
   line-height: 24rpx;
 }
 
+.goods-detail-page .goods-info .goods-contact{
+  padding: 20rpx 0;
+}
+.goods-detail-page .goods-info .goods-contact>view{
+  display: flex;
+  align-items: center;
+}
+.goods-detail-page .goods-info .goods-contact>view:nth-of-type(1){
+  margin-bottom: 10px;
+}
+.goods-detail-page .goods-info .goods-contact>view>view:last-child{
+  padding-left: 5px;
+}
+.goods-detail-page .goods-info .goods-call>view:last-child{
+  padding-left: 5px;
+}
 .goods-detail-page .goods-info .goods-intro {
   font-size: 26rpx;
   color: #888;

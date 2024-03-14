@@ -1,7 +1,7 @@
 import { fetchUserCenter } from '../../services/usercenter/fetchUsercenter';
 import Toast from 'tdesign-miniprogram/toast/index';
+import {isLoginStatus} from "../../utils/isLoginStatus";
 /*import {fetchOrders} from "../../services/order/orderList";*/
-
 const menuData = [
   [
     // {
@@ -61,7 +61,7 @@ const orderTagInfos = [
     orderNum: 0,
     tabType: 50,
     status: 50
-  },
+  }
   // {
   //   title: '退款/售后',
   //   iconName: 'exchang',
@@ -82,9 +82,17 @@ Page({
     showKefu: true,
     versionNo: ''
   },
-
   onLoad() {
     this.getVersionInfo();
+    this.init();
+
+  },
+
+  onShow() {
+    this.getTabBar().init();
+    this.init();
+  },
+  init(){
     const userInfo = wx.getStorageSync('userInfo');
     if (userInfo) {
       this.setData({
@@ -96,11 +104,6 @@ Page({
         status:-1
       })*/
     }
-  },
-
-  onShow() {
-    this.getTabBar().init();
-    /*this.init();*/
   },
 
   /*  getMyOrder: async (params)=>{
@@ -232,16 +235,22 @@ Page({
         url: '/pages/order/after-service-list/index'
       });
     } else {
-      wx.navigateTo({
-        url: `/pages/order/order-list/index?status=${status}`
-      });
+      if (isLoginStatus(getCurrentPages())){
+        wx.navigateTo({
+          url: `/pages/order/order-list/index?status=${status}`
+        });
+      }
+
     }
   },
 
   jumpAllOrder() {
-    wx.navigateTo({
-      url: '/pages/order/order-list/index'
-    });
+    if (isLoginStatus(getCurrentPages())){
+      wx.navigateTo({
+        url: '/pages/order/order-list/index'
+      });
+    }
+
   },
 
   openMakePhone() {

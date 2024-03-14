@@ -1,14 +1,14 @@
 <view class="person-info">
   <t-input disabled align="right" model:value="{{nickname}}" placeholder="请输入昵称" label="昵称" />
   <t-input
-    disabled="{{group_name}}"
+    disabled="{{personInfo.status!==10}}"
     align="right"
-    model:value="{{personInfo.status===20?'审核中':group_name}}"
+    model:value="{{group_name}}"
     placeholder="请输入公司名称"
     label="公司名称"
   />
   <t-input
-    disabled="{{job_num}}"
+    disabled="{{personInfo.status!==10}}"
     align="right"
     model:value="{{personInfo.status===20?'审核中':job_num}}"
     placeholder="请输入工号"
@@ -34,7 +34,7 @@
   />-->
 </view>
 <view class="person-info__wrapper">
-  <t-button block shape="round" disabled="{{!nickname||group_name&&job_num}}" bind:tap="onSubmit">保存</t-button>
+  <t-button block shape="round" disabled="{{!nickname||personInfo.status!==10}}" bind:tap="onSubmit">保存</t-button>
 </view>
 <t-message id="t-message" />
 <t-toast id="t-toast" />

@@ -1,5 +1,6 @@
 import { bindInviteCode } from '../../../services/usercenter/usercenter';
 import Message from 'tdesign-miniprogram/message/index';
+import Toast from 'tdesign-miniprogram/toast/index';
 Page({
   data: {
     codeValue: ''
@@ -16,7 +17,7 @@ Page({
       bindInviteCode(this.data.codeValue).then((res) => {
         if (res.code === 200) {
           console.log(res.data);
-          //wx.setStorageSync('userInfo', res.data);
+          wx.setStorageSync('userInfo', res.data);
           Toast({
             context: that,
             selector: '#t-toast',
