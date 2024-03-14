@@ -49,19 +49,26 @@ const orderTagInfos = [
     status: 10
   },
   {
+    title: '待使用',
+    iconName: 'map',
+    orderNum: 0,
+    tabType: 40,
+    status: 40
+  },
+  {
     title: '待评价',
     iconName: 'comment',
     orderNum: 0,
     tabType: 50,
     status: 50
   },
-  {
-    title: '退款/售后',
-    iconName: 'exchang',
-    orderNum: 0,
-    tabType: 0,
-    status: 60
-  }
+  // {
+  //   title: '退款/售后',
+  //   iconName: 'exchang',
+  //   orderNum: 0,
+  //   tabType: 0,
+  //   status: 60
+  // }
 ];
 
 Page({

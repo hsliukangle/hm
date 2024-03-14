@@ -365,17 +365,10 @@ __proto__: Object
   },
   // 提交订单
   submitOrder() {
-    /*if (!userAddressReq && !settleDetailData.userAddress) {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: '请添加收货地址',
-        duration: 2000,
-        icon: 'help-circle'
-      });
-
-      return;
-    }*/
+    wx.showLoading({
+      mask: true,
+      title: '支付中...'
+    });
     const settleDetailData = this.data.settleDetailData[0];
     this.payLock = true;
     commitPay({ service_id: settleDetailData.id }).then(

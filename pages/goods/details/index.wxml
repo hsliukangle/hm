@@ -93,7 +93,8 @@
       <t-image t-class="img" src="{{recRightImg}}" />
     </view>
     <view wx:if="{{details.desc}}" style="padding: 20rpx">
-      {{details.desc}}
+      {{details.shop_position}}
+      {{details.shop_phone}}
       <!-- <t-image t-class="desc-content__img" src="{{item}}" mode="widthFix" />-->
     </view>
     <view wx:if="{{details.details.length > 0}}" wx:for="{{details.details}}" wx:key="index">
