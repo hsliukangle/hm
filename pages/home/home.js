@@ -102,7 +102,7 @@ Page({
 
     try {
       const cate = this.privateData.tabIndex;
-      const nextList = await fetchGoodsList(cate, pageIndex, pageSize);
+      const nextList = await fetchGoodsList(this.data.tabList[cate-1].id, pageIndex, pageSize);
       const goodListPagination = {
         total: nextList.total,
         index: pageIndex,

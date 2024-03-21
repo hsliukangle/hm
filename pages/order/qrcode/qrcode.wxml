@@ -1,0 +1,2 @@
+<!--pages/order/qrcode.wxml-->
+<text>订单号{{order_no}}的二维码</text>

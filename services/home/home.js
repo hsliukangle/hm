@@ -50,8 +50,13 @@ function realFetchHome() {
   const {
     genSwiperImageList
   } = require('../../model/swiper');
+  let userInfo = wx.getStorageSync('userInfo');
+  let cate = 0
+  if(userInfo && userInfo.group_id){
+    cate = userInfo.group_id;
+  }
   return new Promise((resolve, reject) => {
-    getRequest("/api/star_services_category/1").then(res => {
+    getRequest(`/api/star_services_category/${cate}`).then(res => {
       resolve({
         swiper: genSwiperImageList(),
         tabList: res.data.data,

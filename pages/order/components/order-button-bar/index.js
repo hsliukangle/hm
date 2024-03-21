@@ -193,12 +193,15 @@ Component({
       });
     },
 
-    onShowCode() {
+    onShowCode: async (that) => {
       Toast({
         context: this,
         selector: '#t-toast',
         message: '查看二维码',
         icon: 'check-circle'
+      });
+      wx.navigateTo({
+        url: `/pages/order/qrcode/qrcode?order_no=${that.orderNo}`
       });
     },
 

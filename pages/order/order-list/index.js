@@ -103,7 +103,6 @@ Page({
     this.setData({
       listLoading: 1
     });
-    console.log(statusCode);
     return fetchOrders(statusCode)
       .then((res) => {
         this.page.num++;

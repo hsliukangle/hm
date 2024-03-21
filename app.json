@@ -29,7 +29,8 @@
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
     "pages/usercenter/name-edit/index",
-    "pages/usercenter/code-edit/index"
+    "pages/usercenter/code-edit/index",
+    "pages/order/qrcode/qrcode"
   ],
   "tabBar": {
     "custom": true,
@@ -52,7 +53,9 @@
       }
     ]
   },
-  "requiredPrivateInfos": ["chooseAddress"],
+  "requiredPrivateInfos": [
+    "chooseAddress"
+  ],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {},
   "window": {
