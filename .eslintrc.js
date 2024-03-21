@@ -31,7 +31,7 @@ module.exports = {
     'class-name-casing': 'off',
     //'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-debugger': 'off',
-    'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+    'no-unused-expressions': ['off', { allowShortCircuit: true, allowTernary: true }],
     'no-empty-interface': 'off',
     'no-use-before-define': ['error', { functions: false }],
     'no-useless-constructor': 'error',
@@ -68,7 +68,7 @@ module.exports = {
         asyncArrow: 'always'
       }
     ],
-    'no-param-reassign': [
+    /*'no-param-reassign': [
       'warn',
       {
         props: true,
@@ -86,13 +86,13 @@ module.exports = {
           'state' // for Vuex
         ]
       }
-    ],
+    ],*/
     'no-confusing-arrow': 'warn',
     'no-dupe-class-members': 'error',
     'no-iterator': 'warn',
     'dot-notation': 'warn',
     'one-var': ['warn', 'never'],
-    'no-multi-assign': 'error',
+    'no-multi-assign': 'off',
     'no-unused-vars': [
       'error',
       {
